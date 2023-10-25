@@ -1,4 +1,4 @@
-import { useState, FormEvent, ChangeEvent } from "react";
+import { useState, FormEvent, ChangeEvent, useEffect } from "react";
 import {
   LoginLayout,
   SectionContainer,
@@ -34,7 +34,21 @@ const Login = () => {
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     try {
-      console.log('submitting', form);
+      const response = await fetch('http://localhost:8000/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(form)
+      })
+
+      if (!response.ok) {
+        const error = await response.text();
+        throw new Error(error)
+      }
+
+      const credentials = await response.json();
+
       setFormErrors({});
     } catch(err) {
       setErroMapping(err, setFormErrors);
