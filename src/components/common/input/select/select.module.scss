@@ -1,0 +1,66 @@
+@import '../../../../assets/scss/variables';
+@import '../../../../assets/scss/mixins';
+
+
+.custom-select {
+  height: fit-content;
+  position: relative;
+  font-family: 'Reem Kufi', sans-serif;
+  max-width: 500px;
+  border-radius: 5px;
+  @include box-shadow(0px, 8px, 18px, #F1F1F1);
+  border: 1px solid transparent;
+  border-color: rgba(0, 0, 0, 0.1);
+  padding: 2px 16px;
+
+  .select-items {
+    position: absolute;
+    background-color: #FFFAED;
+    top: 110%;
+    left: 0;
+    right: 0;
+    z-index: 99;
+
+    div {
+      border: 1px solid transparent;
+      border-color: rgba(0, 0, 0, 0.1);
+      padding: 8px 16px;
+      &:last-child {
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+      }
+    }
+  }
+
+  .select-selected {
+    border-radius: 5px;
+    &.select-arrow-active::before {
+      position: absolute;
+      content: "";
+      top: 9px;
+      right: 10px;
+      width: 27px;
+      height: 27px;
+      border-radius: 100%;
+      background-color: #e6eaff;
+    }
+    &::after {
+      position: absolute;
+      content: "";
+      top: 19px;
+      right: 15px;
+      width: 0;
+      height: 0;
+      border: 8px solid transparent;
+      border-color: #6b6b6b transparent transparent transparent;
+    }
+    &.select-arrow-active::after {
+      border-color: $secondary-color transparent transparent transparent;
+    }
+  }
+}
+
+/*style the items (options), including the selected item:*/
+.select-items div, .custom-select  {
+  cursor: pointer;
+}

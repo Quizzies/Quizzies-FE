@@ -1,0 +1,26 @@
+// Tablets and smaller
+
+@media(max-width: 800px) {
+  .flex-items {
+    flex-direction: column;
+    &.center, &.left, &.row {
+      flex-direction: row;
+    }
+  }
+}
+
+@media(max-width: 600px) {
+  .flex-items.center {
+    flex-direction: column;
+    .button {
+      margin: 5px auto !important;
+      width: 250px !important;
+    }
+  }
+}
+
+@media(max-width: 328px) {
+  .button-action {
+    min-width: 240px;
+  }
+}

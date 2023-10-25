@@ -1,0 +1,13 @@
+@import '../../../assets//scss/variables';
+
+.heading-section {
+  text-align: center;
+  margin-top: 25px;
+  // width: 250px;
+  margin-left: auto;
+  margin-right: auto;
+
+  p {
+    color: $primary-color;
+  }
+}

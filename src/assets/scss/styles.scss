@@ -1,0 +1,194 @@
+@import url("https://fonts.googleapis.com/css2?family=Rokkitt&family=Stylish&family=Monserrat&family=Rakkas&family=Rambla&display=swap");
+@import "./variables";
+@import "./mixins";
+@import "./utilities";
+
+// General
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  min-height: 100%;
+  position: relative;
+}
+
+body {
+  height: 100%;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Rokkitt", cursive;
+}
+
+p {
+  margin: 10px 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.call-to-action {
+  color: $primary-color;
+}
+
+.call-to-action {
+  text-align: center;
+}
+
+ul {
+  list-style-type: none;
+}
+
+hr {
+  border-width: 0px;
+  border-bottom: 2px solid $lighter-grey;
+}
+
+// Styles with embedded tags or styles (flex)
+
+.flex-items {
+  display: flex !important;
+  height: 100%;
+  .flex-content {
+    display: flex !important;
+    flex-direction: row;
+    padding: 30px 20px;
+    img {
+      width: 70px;
+      height: 70px;
+      margin: auto 0;
+      margin-right: 30px;
+    }
+    div {
+      h3 {
+        margin-bottom: 8px;
+      }
+    }
+  }
+  &.center {
+    justify-content: center;
+  }
+  &.left {
+    justify-content: left;
+  }
+  &.inner-space {
+    justify-content: space-between;
+  }
+}
+
+.flex-columns {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 100%;
+  flex: 1;
+  text-align: center;
+
+  img {
+    width: 200px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  h1 {
+    font-size: 30px;
+    color: $secondary-color;
+  }
+
+  p {
+    text-align: justify;
+  }
+}
+
+// Buttons
+
+.button:active,
+button:focus {
+  outline: none;
+  /* border: none; */
+  // -moz-outline-style: none;
+}
+
+.button {
+  border-radius: 4px;
+  font-family: 'Rokkitt', sans-serif;
+  color: $white-color;
+  cursor: pointer;
+  min-width: 120px;
+  height: 40px;
+  font-size: 16px;
+
+  &:active, &:focus {
+    outline: none;
+    -moz-outline-style: none;
+  }
+  
+  &-auth {
+    display: block;
+    margin: 0 5px;
+  } 
+
+  &-action {
+    display: block;
+    min-width: 290px;
+    margin: 0 auto;
+    height: 40px;
+    font-family: 'Stylish', sans-serif;
+  }
+
+  &-outline {
+    background: $white-color;
+    color: $secondary-color;
+    border: 1px solid $secondary-color;
+  }
+
+  &-outline-green {
+    background: $white-color;
+    color: $primary-color;
+    border: 1px solid $primary-color;
+  }
+
+  &-primary {
+    background: $secondary-color;
+    border: 1px solid $secondary-color;
+  }
+
+  &-secondary {
+    background: $primary-color;
+    border: 1px solid $primary-color;
+  }
+
+  &-submit {
+    height: 43px;
+    margin-top: 10px;
+  }
+
+  &:hover {
+    opacity: 0.9;
+  }
+}
+
+// Form styles
+
+.form-w-sm {
+  max-width: 290px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 10px 0 0 0 !important;
+}
+
+// Import Media Queries
+@import "media";

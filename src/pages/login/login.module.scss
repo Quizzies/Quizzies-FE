@@ -1,0 +1,102 @@
+@import '../../assets/scss/utilities';
+
+section {
+  padding: 10px 20px;
+}
+
+#register-title {
+  margin-top: 40px;
+}
+
+.flex-columns img {
+  width: 200px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.flex-columns h1 {
+  margin-bottom: 10px;
+}
+
+#form input {
+  display: block;
+  margin: 15px auto;
+  height: 50px;
+  min-width: 300px;
+  color: #C6C6C6;
+  padding-left: 20px;
+  border-radius: 4px;
+  border: 0.5px solid #C6C6C6;;
+}
+
+#form input[type=text]:focus {
+  outline: none !important;
+  border: 1px solid #0072A3;
+}
+
+#form button{
+  min-width: 300px;
+  height: 50px;
+  background: #0072A3;
+  border: 1px solid #0072A3;
+  color: #fff;
+  margin: 15px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px;
+}
+
+#form button:last-child {
+  font-family: 'Monserrat', sans-serif; 
+  margin-left: auto;
+  margin-right: auto;
+  bottom: -100px;
+  background: #A9C500;
+  border: 1px solid #A9C500;
+  color: #fff;
+}
+
+#form button.google {
+  background: #fff;
+  color: black;
+}
+
+#form .forgot{
+  color: #00A3FF;
+  text-align: center;
+  margin-right: 135px;
+}
+#additional {
+  text-align: center;
+  padding-bottom: 40px;
+}
+
+#additional .login-info p:first-child {
+  font-size: 18px;
+}
+
+#additional .login-info p:last-child {
+  color: #00A3FF;
+}
+
+#additional .policy span {
+  color: #00A3FF;
+} 
+
+#footer {
+  padding-bottom: 35px;
+  text-align: center;
+  margin-inline-start: 3em;
+  margin-inline-end: 3em;
+  margin-top: 3em;
+}
+
+.foot{
+  @extend .highlight;
+  max-width: 250px;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
