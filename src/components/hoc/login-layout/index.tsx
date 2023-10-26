@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
-import { User } from "../../../domain/models";
 import { PropsChild } from "../../../ts/interfaces/app-interfaces";
+import { AuthState } from "../../../ts/types/app-state-types";
 import Image from "../../common/image";
 import Spinner from "../../common/spinner";
 import styles from "./layout.module.scss";
@@ -8,9 +8,9 @@ import styles from "./layout.module.scss";
 const LoginLayout: React.FC<PropsChild> = (props) => {
   const { loading } = useSelector<
     {
-      auth: User;
+      auth: AuthState;
     },
-    User
+    AuthState
   >((state) => state.auth);
 
   return (

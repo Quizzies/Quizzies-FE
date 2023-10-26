@@ -203,6 +203,10 @@ section {
 }
 
 .pt {
+  &-0 {
+    padding-top: 0rem !important;
+    padding-bottom: 0rem !important;
+  }
   &-1 {
     padding-top: 1rem !important;
     padding-bottom: 0 !important;
@@ -440,6 +444,10 @@ section {
 .title {
   font-family: 'Monserrat', sans-serif;
   text-align: center;
+}
+
+.p-primary {
+  color: $primary-color;
 }
 
 .section-title {
