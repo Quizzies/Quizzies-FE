@@ -5,5 +5,12 @@
     "email": "dominicsc2hs@gmail.com",
     "userType": "S",
     "userToken": "asdaksjahsdjasd"
+  },
+  "courses": {
+    "courses": [
+      { "courseId": 1980, "courseName": "Data structures and algorithms" },
+      { "courseId": 2023, "courseName": "Advanced topics in Software Engineering" },
+      { "courseId": 9098, "courseName": "Machine learning" }
+    ]
   }
 }

@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from 'react-router-dom';
 import {
   Form,
   Input,
@@ -9,8 +9,8 @@ import {
   SectionContainer,
 } from "../../components";
 import { RegisterInput } from "../../domain/dtos";
-import { User } from "../../domain/models";
 import { userLogin } from "../../store/features/auth/authActions";
+import { AuthState } from "../../ts/types/app-state-types";
 import styles from "./login.module.scss";
 
 const registerInput: RegisterInput = {
@@ -22,9 +22,9 @@ const Login = () => {
   const [form, setForm] = useState<RegisterInput>(registerInput);
   const { errors, success, userInfo } = useSelector<
     {
-      auth: User;
+      auth: AuthState;
     },
-    User
+    AuthState
   >((state) => state.auth);
 
   const dispatch = useDispatch()
