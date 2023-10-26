@@ -1,15 +1,17 @@
-import { useState, FormEvent, ChangeEvent, useEffect } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from "react-redux";
 import {
-  LoginLayout,
-  SectionContainer,
   Form,
   Input,
+  LoginLayout,
   PrimaryButton,
+  SectionContainer,
 } from "../../components";
+import { RegisterInput } from "../../domain/dtos";
+import { User } from "../../domain/models";
+import { userLogin } from "../../store/features/auth/authActions";
 import styles from "./login.module.scss";
-import { optionInputsErrors, setErroMapping } from "../../ts/utils/error-utils";
-
-type RegisterInput = { email: string; password: string };
 
 const registerInput: RegisterInput = {
   email: "",
@@ -18,41 +20,34 @@ const registerInput: RegisterInput = {
 
 const Login = () => {
   const [form, setForm] = useState<RegisterInput>(registerInput);
-  const [formErrors, setFormErrors] = useState<
-    optionInputsErrors<RegisterInput>
-  >({});
+  const { errors, success, userInfo } = useSelector<
+    {
+      auth: User;
+    },
+    User
+  >((state) => state.auth);
+
+  const dispatch = useDispatch()
+
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    // redirect authenticated user to dashboard
+    if (success || userInfo) navigate('/')
+  }, [success])
 
   function onChange(event: ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target;
     setForm({
       ...form,
       [name]: value,
-    })
+    });
   }
-
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    try {
-      const response = await fetch('http://localhost:8000/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(form)
-      })
-
-      if (!response.ok) {
-        const error = await response.text();
-        throw new Error(error)
-      }
-
-      const credentials = await response.json();
-
-      setFormErrors({});
-    } catch(err) {
-      setErroMapping(err, setFormErrors);
-    }
+    
+    dispatch(userLogin(form) as any)
   }
 
   return (
@@ -68,8 +63,8 @@ const Login = () => {
             }}
             additionalStyles="input-align"
             value={form.email}
-            errors={formErrors.email}
-            name='email'
+            errors={errors?.email}
+            name="email"
             changed={onChange}
           />
           <Input
@@ -80,8 +75,8 @@ const Login = () => {
             }}
             additionalStyles="input-align"
             value={form.password}
-            errors={formErrors.password}
-            name='password'
+            errors={errors?.password}
+            name="password"
             changed={onChange}
           />
           <PrimaryButton

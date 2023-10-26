@@ -1,6 +1,9 @@
 {
   "login": {
-    "fullname": "Selena Gomez",
-    "token": "asdaksjahsdjasd"
+    "firstName": "Diego",
+    "lastName": "Salas Noain",
+    "email": "dominicsc2hs@gmail.com",
+    "userType": "S",
+    "userToken": "asdaksjahsdjasd"
   }
 }

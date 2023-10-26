@@ -1,47 +1,26 @@
-import { useState } from 'react'
-import classes from './navbar.module.scss'
-import Image from '../../common/image';
+import { useSelector } from "react-redux";
+import { User } from "../../../domain/models";
+import classes from "./navbar.module.scss";
 
 export const Navbar: React.FC = () => {
-  const [data, setData] = useState<any>();
-
-  function renderNavContent() {
-    if (data?.profile) {
-      return (
-        <>
-          {/* <Link to='/notifications'>
-            <img src="/img/bell.png" alt="notificaciones" />
-          </Link>
-          <Link to='/messages'>
-            <img src="/img/message.png" alt="messages" />
-          </Link> */}
-
-          <img src="/img/3.png" alt="notificaciones" />
-        </>
-      )
-    }
-  }
+  const { userInfo } = useSelector<
+    {
+      auth: User;
+    },
+    User
+  >((state) => state.auth);
 
   return (
     <header>
-    <div className={classes.header}>
-      <div data-testid="header-container">
+      <div className={classes.header}>
         <div className={classes.menuWrap}>
-          <Image
-            style="centered-img"
-            src="/img/trilce.jpg"
-            alt="Logo"
-            size={60}
-            additionalStyles="my-0"
-            goToOnClick="/"
-          />
+          <h1>Quizzies</h1>
+          <div className={classes.menuWrapRight}>
+            <p>Hey {userInfo?.firstName}</p>
+            <img src="/img/3.png" width={35} height={35} alt="me" />
+          </div>
         </div>
-
-        <nav className={classes.nav}>
-          <ul className={classes.menu}>{renderNavContent()}</ul>
-        </nav>
       </div>
-    </div>
-  </header>
-  )
-}
+    </header>
+  );
+};
