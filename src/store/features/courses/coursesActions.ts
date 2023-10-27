@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { CourseList } from "../../../domain/dtos";
+import { CourseDto } from "../../../domain/dtos";
 import { backendURL } from "../../../ts/constants";
 import { setErroMapping } from "../../../ts/utils/error-utils";
 
@@ -19,7 +19,7 @@ export const coursesList = createAsyncThunk<any, void>(
         throw new Error(error);
       }
 
-      const data = (await response.json()) as CourseList;
+      const data = (await response.json()) as CourseDto[];
 
       return data;
     } catch (error: any) {

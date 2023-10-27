@@ -1,22 +1,17 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { MainLayout, SectionContainer } from "../../components";
-import classes from "./dashboard.module.scss";
+import { SectionContainer } from "../../components";
+import { RootState } from "../../store";
 import { coursesList } from "../../store/features/courses/coursesActions";
-import { CoursesState } from "../../ts/types/app-state-types";
+import classes from "./dashboard.module.scss";
 
 const Dashboard = () => {
-  const { courses } = useSelector<
-  {
-    course: CoursesState;
-  },
-  CoursesState
->((state) => state.course);
+  const { courses } = useSelector((state: RootState) => state.course);
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(coursesList() as any)
+    dispatch(coursesList() as any);
   }, []);
 
   return (
@@ -27,18 +22,15 @@ const Dashboard = () => {
       </SectionContainer>
       <SectionContainer additionalStyles="pt-0">
         <p className="p-primary">Courses you teach</p>
-        {courses && (
+        {courses &&
           courses.map((course) => (
-            <p key={course.courseId}>cs {course.courseId} - {course.courseName}</p>
-          ))
-        )}
+            <p key={course.courseId}>
+              cs {course.courseId} - {course.courseName}
+            </p>
+          ))}
       </SectionContainer>
     </>
   );
 };
 
-export default (
-  <MainLayout>
-    <Dashboard />
-  </MainLayout>
-);
+export default Dashboard
