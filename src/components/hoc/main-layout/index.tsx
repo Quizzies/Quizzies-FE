@@ -1,7 +1,7 @@
 import React from "react";
-import { Navbar } from "../navbar";
-import Footer from "../../embedded-layout/footer";
 import { PropsChild } from "../../../ts/interfaces/app-interfaces";
+import Footer from "../../embedded-layout/footer";
+import { Navbar } from "../navbar";
 import styles from './layout.module.scss';
 
 export const MainLayout: React.FC<PropsChild> = (props) => {

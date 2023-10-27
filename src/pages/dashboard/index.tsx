@@ -2,17 +2,26 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { SectionContainer } from "../../components";
 import { RootState } from "../../store";
-import { coursesList } from "../../store/features/courses/coursesActions";
+import { setCredentials } from "../../store/features/auth/authSlice";
+import { useGetUserDetailsQuery } from "../../store/services/auth/atuhService";
 import classes from "./dashboard.module.scss";
+import Spinner from "../../components/common/spinner";
 
 const Dashboard = () => {
-  const { courses } = useSelector((state: RootState) => state.course);
-
+  const { userInfo } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
 
+  // automatically authenticate user if token is found
+  const { data, isFetching } = useGetUserDetailsQuery("userDetails", {
+    // perform a refetch every 15mins
+    pollingInterval: 900000,
+  });
+
   useEffect(() => {
-    dispatch(coursesList() as any);
-  }, []);
+    if (data) dispatch(setCredentials(data));
+  }, [data, dispatch]);
+
+  if (isFetching) return <Spinner type="spinner" />;
 
   return (
     <>
@@ -21,9 +30,9 @@ const Dashboard = () => {
         <hr className={classes.fit} />
       </SectionContainer>
       <SectionContainer additionalStyles="pt-0">
-        <p className="p-primary">Courses you teach</p>
-        {courses &&
-          courses.map((course) => (
+        <p className="p-primary">{ userInfo?.userType === 'T' ? 'Courses you teach' : 'Enrolled courses' }</p>
+        {userInfo?.courses &&
+          userInfo.courses.map((course) => (
             <p key={course.courseId}>
               cs {course.courseId} - {course.courseName}
             </p>
@@ -33,4 +42,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard
+export default Dashboard;

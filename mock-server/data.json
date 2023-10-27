@@ -7,8 +7,25 @@
     "userToken": "asdaksjahsdjasd"
   },
   "courses": [
+    { "courseId": 1980, "courseName": "Data structures and algorithms" },
+    {
+      "courseId": 2023,
+      "courseName": "Advanced topics in Software Engineering"
+    },
+    { "courseId": 9098, "courseName": "Machine learning" }
+  ],
+  "profile": {
+    "firstName": "Diego",
+    "lastName": "Salas Noain",
+    "email": "dominicsc2hs@gmail.com",
+    "userType": "T",
+    "courses": [
       { "courseId": 1980, "courseName": "Data structures and algorithms" },
-      { "courseId": 2023, "courseName": "Advanced topics in Software Engineering" },
+      {
+        "courseId": 2023,
+        "courseName": "Advanced topics in Software Engineering"
+      },
       { "courseId": 9098, "courseName": "Machine learning" }
-  ]
+    ]
+  }
 }

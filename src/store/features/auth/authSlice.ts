@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { AuthResponse } from "../../../domain/dtos";
+import { AuthResponse, UserProfileDto } from "../../../domain/dtos";
 import { AuthState } from "../../../ts/types/app-state-types";
 import { userLogin } from "./authActions";
 
@@ -19,7 +19,18 @@ const initialState: AuthState = {
 const authSlice = createSlice<AuthState, any>({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    logout: (state: AuthState) => {
+      localStorage.removeItem('userToken') // delete token from storage
+      state.loading = false
+      state.userInfo = null
+      state.userToken = null
+      state.errors = null
+    },
+    setCredentials: (state: AuthState, { payload }: PayloadAction<UserProfileDto>) => {
+      state.userInfo = payload
+    },
+  },
   extraReducers: {
     // login user
     [userLogin.pending as any]: (state: AuthState) => {
@@ -41,5 +52,7 @@ const authSlice = createSlice<AuthState, any>({
     },
   },
 });
+
+export const { logout, setCredentials } = authSlice.actions as any
 
 export default authSlice.reducer;
