@@ -1,18 +1,21 @@
 import {
-  createBrowserRouter
+  Route,
+  createBrowserRouter,
+  createRoutesFromElements
 } from "react-router-dom";
-import { Login, DashBoard } from "../pages";
+import { ProtectedRoute } from "../components";
+import { DashBoard, Login } from "../pages";
 
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <>
+      <Route element={<ProtectedRoute />}>
+        <Route path="/" element={<DashBoard />} />
+      </Route>
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: DashBoard,
-  },
-  {
-    path: "/login",
-    element: Login,
-  },
-]);
+      <Route path="/login" element={<Login />} />
+    </>
+  )
+);
 
 export default router;

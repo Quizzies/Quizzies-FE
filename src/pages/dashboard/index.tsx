@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { MainLayout, SectionContainer } from "../../components";
+import { SectionContainer } from "../../components";
 import { RootState } from "../../store";
 import { coursesList } from "../../store/features/courses/coursesActions";
 import classes from "./dashboard.module.scss";
@@ -33,8 +33,4 @@ const Dashboard = () => {
   );
 };
 
-export default (
-  <MainLayout>
-    <Dashboard />
-  </MainLayout>
-);
+export default Dashboard
