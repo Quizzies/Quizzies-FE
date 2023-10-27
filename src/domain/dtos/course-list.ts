@@ -1,6 +1,4 @@
-export interface CourseList {
-  courses: {
-    courseId: string
-    courseName: string
-  } []
+export interface CourseDto {
+  courseId: string
+  courseName: string
 }
