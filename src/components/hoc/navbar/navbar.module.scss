@@ -48,8 +48,15 @@
 
 .menuWrapRight {
   * {
-    margin-left: 10px;
+    margin-left: 5px;
     color: $shadow-color;
+    margin: 0 !important;
+  }
+  p {
+    margin-right: 10px !important;
+    display: block;
+    margin-top: auto !important;
+    margin-bottom: auto !important;
   }
 }
 

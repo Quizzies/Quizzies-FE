@@ -151,8 +151,8 @@ button:focus {
 
   &-outline {
     background: $white-color;
-    color: $secondary-color;
-    border: 1px solid $secondary-color;
+    color: $primary-color !important;
+    border: 1px solid $primary-color;
   }
 
   &-outline-green {

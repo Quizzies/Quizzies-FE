@@ -26,6 +26,7 @@ const authSlice = createSlice<AuthState, any>({
       state.userInfo = null
       state.userToken = null
       state.errors = null
+      state.success = false
     },
     setCredentials: (state: AuthState, { payload }: PayloadAction<UserProfileDto>) => {
       state.userInfo = payload
