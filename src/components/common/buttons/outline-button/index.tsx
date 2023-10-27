@@ -10,7 +10,6 @@ export const OutlineButton: React.FC<IntersectBaseProps> = ({
   const outlineColor = color === 'green' ? 'button-outline-green' : 'button-outline'
   return (
     <button
-      data-testid={dataTestId}
       onClick={onClick}
       className={`button button-auth ${outlineColor} ${additionalStyles}`}
     >

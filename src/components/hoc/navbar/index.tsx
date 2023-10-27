@@ -1,26 +1,25 @@
-import { useSelector } from "react-redux";
-import { useLocation } from 'react-router-dom';
-import { User } from "../../../domain/models";
-import classes from "./navbar.module.scss";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
+import { RootState } from "../../../store";
+import { logout } from "../../../store/features/auth/authSlice";
+import OutlineButton from "../../common/buttons/outline-button";
+import classes from "./navbar.module.scss";
 
 export const Navbar: React.FC = () => {
-  const [bannerTitle, setBannerTitle] = useState('')
-  const { userInfo } = useSelector<
-    {
-      auth: User;
-    },
-    User
-  >((state) => state.auth);
+  const [bannerTitle, setBannerTitle] = useState("");
+  const { userInfo } = useSelector((state: RootState) => state.auth);
 
   const location = useLocation();
 
-  useEffect(() => {
-    switch(location.pathname) {
-      default: setBannerTitle('Dashboard');
-    }
-  }, [location])
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    switch (location.pathname) {
+      default:
+        setBannerTitle("Dashboard");
+    }
+  }, [location]);
 
   return (
     <>
@@ -29,8 +28,12 @@ export const Navbar: React.FC = () => {
           <div className={classes.menuWrap}>
             <h1>Quizzies</h1>
             <div className={classes.menuWrapRight}>
-              <p>Hey {userInfo?.firstName}</p>
-              <img src="/img/3.png" width={35} height={35} alt="me" />
+              {userInfo && <p>Hey {userInfo.firstName}</p>}
+              <OutlineButton
+                value="logout"
+                additionalStyles="small"
+                onClick={() => dispatch(logout())}
+              />
             </div>
           </div>
         </div>
