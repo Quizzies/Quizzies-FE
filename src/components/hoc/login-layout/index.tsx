@@ -1,17 +1,12 @@
 import { useSelector } from "react-redux";
 import { PropsChild } from "../../../ts/interfaces/app-interfaces";
-import { AuthState } from "../../../ts/types/app-state-types";
 import Image from "../../common/image";
 import Spinner from "../../common/spinner";
 import styles from "./layout.module.scss";
+import { RootState } from "../../../store";
 
 const LoginLayout: React.FC<PropsChild> = (props) => {
-  const { loading } = useSelector<
-    {
-      auth: AuthState;
-    },
-    AuthState
-  >((state) => state.auth);
+  const { loading } = useSelector((state: RootState) => state.auth);
 
   return (
     <>
@@ -29,7 +24,7 @@ const LoginLayout: React.FC<PropsChild> = (props) => {
       />
 
       <main>{props.children}</main>
-      { loading && <Spinner type="spinner"/> }
+      {loading && <Spinner type="spinner" />}
     </>
   );
 };
