@@ -1,7 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { CourseDto } from "../../../domain/dtos";
 import { CoursesState } from "../../../ts/types/app-state-types";
-import { Payload } from "../../payload";
 import { coursesList } from "./coursesActions";
 
 const initialState: CoursesState = {
@@ -20,7 +19,7 @@ const courseSlice = createSlice<CoursesState, any>({
       state.loading = true
       state.errors = null
     },
-    [coursesList.fulfilled as any]: (state: CoursesState, { payload }: Payload<CourseDto[]>) => {
+    [coursesList.fulfilled as any]: (state: CoursesState, { payload }: PayloadAction<CourseDto[]>) => {
       state.loading = false
       state.courses = payload
       state.success = true

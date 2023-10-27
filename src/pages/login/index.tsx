@@ -9,8 +9,8 @@ import {
   SectionContainer,
 } from "../../components";
 import { RegisterInput } from "../../domain/dtos";
+import { RootState } from "../../store";
 import { userLogin } from "../../store/features/auth/authActions";
-import { AuthState } from "../../ts/types/app-state-types";
 import styles from "./login.module.scss";
 
 const registerInput: RegisterInput = {
@@ -20,12 +20,7 @@ const registerInput: RegisterInput = {
 
 const Login = () => {
   const [form, setForm] = useState<RegisterInput>(registerInput);
-  const { errors, success, userInfo } = useSelector<
-    {
-      auth: AuthState;
-    },
-    AuthState
-  >((state) => state.auth);
+  const { errors, success, userInfo } = useSelector((state: RootState) => state.auth);
 
   const dispatch = useDispatch()
 

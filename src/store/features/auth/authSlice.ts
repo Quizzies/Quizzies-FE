@@ -1,7 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { AuthResponse } from "../../../domain/dtos";
 import { AuthState } from "../../../ts/types/app-state-types";
-import { Payload } from "../../payload";
 import { userLogin } from "./authActions";
 
 // initialize userToken from local storage
@@ -29,7 +28,7 @@ const authSlice = createSlice<AuthState, any>({
     },
     [userLogin.fulfilled as any]: (
       state: AuthState,
-      { payload }: Payload<AuthResponse>
+      { payload }: PayloadAction<AuthResponse>
     ) => {
       state.loading = false;
       state.userInfo = { ...payload, ...{ userToken: undefined } };
