@@ -6,5 +6,8 @@ module.exports = function (req, res, next) {
     req.query = req.body
   }
   // Continue to JSON Server router
+  // setTimeout(() => {
+  //   next()
+  // }, 3000000)
   next()
 }

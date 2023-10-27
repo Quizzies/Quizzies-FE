@@ -24,7 +24,7 @@
   border-radius: 50%;
   border-top: 8px solid $secondary-color;
   top: 50%;
-  left: 50%;
+  left: calc(50% - 50px);
   z-index: 100;
 }
 
