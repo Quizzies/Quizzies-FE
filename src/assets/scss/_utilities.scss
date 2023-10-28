@@ -220,6 +220,27 @@ section {
   }
 }
 
+.pr {
+  &-0 {
+    padding-right: 0rem !important;
+  }
+  &-0\.5 {
+    padding-right: 0.5rem !important;
+  }
+  &-1 {
+    padding-right: 1rem !important;
+  }
+  &-2 {
+    padding-right: 2rem !important;
+  }
+  &-3 {
+    padding-right: 3rem !important;
+  }
+  &-4 {
+    padding-right: 4rem !important;
+  }
+}
+
 .pt {
   &-0 {
     padding-top: 0rem !important;

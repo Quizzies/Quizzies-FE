@@ -6,7 +6,7 @@ import Select from "./select";
 
 export const Input: React.FC<IntersectBaseProps> = (props) => {
   let inputElement = null;
-  let inputClasses = [classes.inputElement];
+  let inputClasses = [classes.inputElement, props.inputAdditionalStyles];
 
   if (props.errors) {
     inputClasses = inputClasses.concat(classes.errorField);
@@ -53,6 +53,7 @@ export const Input: React.FC<IntersectBaseProps> = (props) => {
         <input
           className={inputClasses.join(" ")}
           {...props.elementConfig}
+          name={props.name}
           value={props.value}
           onChange={props.changed}
         />

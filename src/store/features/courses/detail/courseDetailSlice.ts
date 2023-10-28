@@ -1,7 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { CourseDetailState } from "../../../../ts/types/app-state-types";
 import { courseQuizzes } from "./courseDetailActions";
-import { CourseDto } from "../../../../domain/dtos";
 
 const initialState: CourseDetailState = {
   loading: false,

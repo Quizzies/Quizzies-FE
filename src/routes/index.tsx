@@ -1,11 +1,11 @@
 import {
   Route,
   createBrowserRouter,
-  createRoutesFromElements
+  createRoutesFromElements,
 } from "react-router-dom";
 import { ProtectedRoute } from "../components";
 import { CourseQuizzes, DashBoard, Login } from "../pages";
-import CreateQuiz from "../pages/create-quiz";
+import Step1 from "../pages/create-quiz/step1";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -13,7 +13,7 @@ const router = createBrowserRouter(
       <Route element={<ProtectedRoute />}>
         <Route path="/" element={<DashBoard />} />
         <Route path="/course/:id" element={<CourseQuizzes />} />
-        <Route path="/course/:courseId/create-quiz" element={<CreateQuiz />} />
+        <Route path="/course/:courseId/create-quiz" element={<Step1 />} />
       </Route>
 
       <Route path="/login" element={<Login />} />
