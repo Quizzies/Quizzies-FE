@@ -1,6 +1,5 @@
 import { FC, useState, RefObject, useRef, useEffect } from "react";
 
-import "./select.module.scss";
 import { IntersectPropsSelect } from "../../../../ts/types/select-types";
 import { ISelectOptions } from "../../../../ts/interfaces/app-interfaces";
 
@@ -21,6 +20,7 @@ const Dropdown: FC<IntersectPropsSelect> = (props) => {
     if (!selection.some((current) => current.id === item.id)) {
       if (!props.multiSelect) {
         setSelection([item]);
+        props.onChange!({ target: { value: item.id }} as any)
       }
     } else if (props.multiSelect) {
       setSelection([...selection, item]);

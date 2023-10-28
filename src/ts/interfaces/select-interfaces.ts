@@ -5,4 +5,5 @@ export interface ISelect {
   items: any | ISelectOptions[];
   multiSelect?: boolean;
   tags?: ISelectOptions[];
+  onChange: React.ChangeEventHandler<HTMLTextAreaElement> | undefined
 }

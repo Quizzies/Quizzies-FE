@@ -16,20 +16,30 @@ export const Navbar: React.FC = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const pathIdx = location.pathname.indexOf('/', 2)
-    const path = location.pathname.substring(1, pathIdx);
+  
+    const lastPathIdx = location.pathname.lastIndexOf('/')
+    const lastPath = location.pathname.substring(lastPathIdx);
 
-    switch (path) {
-      case 'course': {
-        if (params.courseId === undefined) {
-          setBannerTitle("Quizzes"); break;
-        } else {  
-          setBannerTitle("Create a quiz"); break;
-        } break;
+    if (lastPath === '/add-question') {
+      setBannerTitle("Add a question"); 
+    } else {
+      const pathIdx = location.pathname.indexOf('/', 2)
+      const path = location.pathname.substring(1, pathIdx);
+
+      switch (path) {
+        case 'course': {
+          if (params.courseId === undefined) {
+            setBannerTitle("Quizzes"); break;
+          } else {  
+            setBannerTitle("Create a quiz"); break;
+          } break;
+        }
+        default:
+          setBannerTitle("Dashboard");
       }
-      default:
-        setBannerTitle("Dashboard");
     }
+
+
   }, [location]);
 
   return (

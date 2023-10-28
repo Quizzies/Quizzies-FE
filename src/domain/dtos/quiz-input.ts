@@ -1,6 +1,3 @@
-export interface QuizInput {
-  quizName: string;
-  quizDescription: string;
-  timeLimit: number;
-  dueDate: string;
-}
+import { QuizDetail } from "./quiz-detail";
+
+export type QuizInput = Omit<QuizDetail, "quizId" | "courseName">

@@ -5,6 +5,7 @@ export { default as PrimaryButton } from './common/buttons/primary-button';
 export { default as Image } from './common/image';
 export { default as Input } from './common/input';
 export { default as FInput } from './common/formik/input';
+export { default as Select } from './common/formik/select';
 export { default as ProtectedRoute } from './common/protected-route';
 export { default as Flex } from './common/hoc/flex';
 export { default as LoginLayout } from './hoc/login-layout';

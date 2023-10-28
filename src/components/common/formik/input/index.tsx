@@ -3,6 +3,7 @@ import classes from "./input.module.scss";
 import CheckBox from "../checkbox";
 import RadioButtons from "../radio";
 import Select from "../select";
+import { type } from "@testing-library/user-event/dist/type";
 
 interface FormikProps {
   field: {
@@ -25,16 +26,14 @@ interface FormikProps {
   option: any
   additionalStyles: string;
   label: string;
+  handleSelectChange: any;
 }
 
 export const FInput = ({ field, form, ...props }: FormikProps) => {
-  console.log(form)
-
   let inputElement = null;
   let inputClasses = [
     classes.inputElement,
-  props.inputAdditionalStyles,
-    "mt-1",
+  props.inputAdditionalStyles
   ];
 
   if (props.errors && props.errors.length) {
@@ -55,7 +54,7 @@ export const FInput = ({ field, form, ...props }: FormikProps) => {
       );
       break;
     case "select":
-      inputElement = <Select value={props.value} items={props.options} />;
+      inputElement = <Select value={props.value} items={props.options} onChange={props.onChange} />;
       break;
     case "radio":
       inputElement = (

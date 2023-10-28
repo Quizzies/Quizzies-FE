@@ -2,6 +2,9 @@ import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./features/auth/authSlice";
 import courseReducer from "./features/courses/coursesSlice";
 import courseDetailReducer from "./features/courses/detail/courseDetailSlice";
+import quizReducer from "./features/quiz/quizSlice";
+import quizQuestionReducer from "./features/quiz/question/quizQuestionSlice";
+import questionTypesReducer from "./features/quiz/question-types/questionTypesSlice";
 import { authApi } from "./services/auth/atuhService";
 
 const store = configureStore({
@@ -9,6 +12,9 @@ const store = configureStore({
     auth: authReducer,
     courseDetail: courseDetailReducer,
     course: courseReducer,
+    quiz: quizReducer,
+    quizQuestion: quizQuestionReducer,
+    questionTypes: questionTypesReducer,
     [authApi.reducerPath]: authApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>

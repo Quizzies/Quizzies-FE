@@ -36,7 +36,7 @@ export const Input: React.FC<IntersectBaseProps> = (props) => {
       );
       break;
     case "select":
-      inputElement = <Select value={props.value} items={props.options} />;
+      inputElement = <Select value={props.value} items={props.options} onChange={() => {}} />;
       break;
     case "radio":
       inputElement = (

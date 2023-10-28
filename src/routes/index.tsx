@@ -4,8 +4,8 @@ import {
   createRoutesFromElements,
 } from "react-router-dom";
 import { ProtectedRoute } from "../components";
-import { CourseQuizzes, DashBoard, Login } from "../pages";
-import Step1 from "../pages/create-quiz/step1";
+import { AddQuestion, CourseQuizzes, DashBoard, Login } from "../pages";
+import { CreateQuiz } from "../pages/create-quiz/create-quiz";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -13,7 +13,8 @@ const router = createBrowserRouter(
       <Route element={<ProtectedRoute />}>
         <Route path="/" element={<DashBoard />} />
         <Route path="/course/:id" element={<CourseQuizzes />} />
-        <Route path="/course/:courseId/create-quiz" element={<Step1 />} />
+        <Route path="/course/:courseId/create-quiz" element={<CreateQuiz />} />
+        <Route path="/quiz/:quizId/add-question" element={<AddQuestion />} />
       </Route>
 
       <Route path="/login" element={<Login />} />
