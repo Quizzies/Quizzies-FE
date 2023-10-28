@@ -3,17 +3,9 @@
     "firstName": "Diego",
     "lastName": "Salas Noain",
     "email": "dominicsc2hs@gmail.com",
-    "userType": "S",
+    "userType": "T",
     "userToken": "asdaksjahsdjasd"
   },
-  "courses": [
-    { "courseId": 1980, "courseName": "Data structures and algorithms" },
-    {
-      "courseId": 2023,
-      "courseName": "Advanced topics in Software Engineering"
-    },
-    { "courseId": 9098, "courseName": "Machine learning" }
-  ],
   "profile": {
     "firstName": "Diego",
     "lastName": "Salas Noain",
@@ -27,5 +19,73 @@
       },
       { "courseId": 9098, "courseName": "Machine learning" }
     ]
-  }
+  },
+  "courses": [
+    {
+      "courseId": 1980,
+      "courseName": "Data structures and algorithms",
+      "quizzes": [
+        {
+          "quizName": "Quiz 1",
+          "dueDate": "08/03/2023"
+        }
+      ]
+    },
+    {
+      "courseId": 2023,
+      "courseName": "Advanced topics in Software Engineering",
+      "quizzes": [
+        {
+          "quizName": "Quiz 2",
+          "dueDate": "08/03/2022"
+        },
+        {
+          "quizName": "Quiz 3",
+          "dueDate": "08/03/2022"
+        },
+        {
+          "quizName": "Quiz 4",
+          "dueDate": "08/03/2022"
+        },
+        {
+          "quizName": "Quiz 5",
+          "dueDate": "08/03/2022"
+        },
+        {
+          "quizName": "Quiz 6",
+          "dueDate": "08/03/2022"
+        },
+        {
+          "quizName": "Quiz 7",
+          "dueDate": "08/03/2022"
+        },
+        {
+          "quizName": "Quiz 8",
+          "dueDate": "08/03/2022"
+        },
+        {
+          "quizName": "Quiz 9",
+          "dueDate": "08/03/2022"
+        },
+        {
+          "quizName": "Quiz 10",
+          "dueDate": "08/03/2022"
+        },
+        {
+          "quizName": "Quiz 11",
+          "dueDate": "08/03/2022"
+        }
+      ]
+    },
+    {
+      "courseId": 9098,
+      "courseName": "Machine learning",
+      "quizzes": [
+        {
+          "quizName": "Final quiz",
+          "dueDate": "09/03/2023"
+        }
+      ]
+    }
+  ]
 }

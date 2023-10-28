@@ -1,5 +1,5 @@
-import { CourseDto, RegisterInput } from "../../domain/dtos";
-import { User } from "../../domain/models";
+import { CourseDto, CourseOverview, RegisterInput } from "../../domain/dtos";
+import { AuthUser } from "../../domain/models";
 import { optionInputsErrors } from "../utils/error-utils";
 
 export type AppState<T> = {
@@ -8,5 +8,6 @@ export type AppState<T> = {
   success: boolean;
 };
 
-export type AuthState = User & AppState<RegisterInput>;
+export type AuthState = AuthUser & AppState<RegisterInput>;
 export type CoursesState = { courses: CourseDto[] } & AppState<void>;
+export type CourseDetailState = CourseOverview & AppState<void>;

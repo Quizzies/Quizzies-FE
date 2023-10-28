@@ -113,6 +113,29 @@ hr {
   }
 }
 
+// Text
+
+.clickable {
+  cursor: pointer;
+  opacity: 1;
+  transition: 0.3s;
+
+  &:hover {
+    opacity: 0.6;
+  }
+}
+
+.header-title {
+  width: fit-content;
+  border-bottom: 4px solid $secondary-color;
+}
+
+.fit {
+  margin-top: -11px;
+  border-width: 0px;
+  border-bottom: 1.5px solid #E4E4E4;
+}
+
 // Buttons
 
 .button:active,
@@ -179,6 +202,13 @@ button:focus {
   &:hover {
     opacity: 0.9;
   }
+}
+
+.button.stack-end {
+  position: relative;
+  bottom: -25px;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 // Form styles

@@ -15,6 +15,7 @@ const courseSlice = createSlice<CoursesState, any>({
   initialState,
   reducers: {},
   extraReducers: {
+    // deprecated
     [coursesList.pending as any]: (state: CoursesState) => {
       state.loading = true
       state.errors = null
@@ -27,7 +28,7 @@ const courseSlice = createSlice<CoursesState, any>({
     [coursesList.rejected as any]: (state: CoursesState, { payload }: any) => {
       state.loading = false
       state.errors = payload
-    },
+    }
   },
 });
 
