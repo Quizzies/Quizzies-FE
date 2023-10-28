@@ -2,11 +2,10 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { AuthResponse, UserProfileDto } from "../../../domain/dtos";
 import { AuthState } from "../../../ts/types/app-state-types";
 import { userLogin } from "./authActions";
+import { getToken } from "../../../ts/utils/auth";
 
 // initialize userToken from local storage
-const userToken = localStorage.getItem("userToken")
-  ? localStorage.getItem("userToken")
-  : null;
+const userToken = getToken()
 
 const initialState: AuthState = {
   loading: false,

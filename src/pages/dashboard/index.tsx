@@ -1,15 +1,16 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { SectionContainer } from "../../components";
+import Spinner from "../../components/common/spinner";
 import { RootState } from "../../store";
 import { setCredentials } from "../../store/features/auth/authSlice";
 import { useGetUserDetailsQuery } from "../../store/services/auth/atuhService";
-import classes from "./dashboard.module.scss";
-import Spinner from "../../components/common/spinner";
 
 const Dashboard = () => {
   const { userInfo } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // automatically authenticate user if token is found
   const { data, isFetching } = useGetUserDetailsQuery("userDetails", {
@@ -23,17 +24,29 @@ const Dashboard = () => {
 
   if (isFetching) return <Spinner type="spinner" />;
 
+  function goToCourse(courseId: number) {
+    navigate(`/course/${courseId}`);
+  }
+
   return (
     <>
       <SectionContainer>
-        <p className={classes.title}>Courses</p>
-        <hr className={classes.fit} />
+        <p className="header-title">Courses</p>
+        <hr className="fit" />
       </SectionContainer>
       <SectionContainer additionalStyles="pt-0">
-        <p className="p-primary">{ userInfo?.userType === 'T' ? 'Courses you teach' : 'Enrolled courses' }</p>
+        <p className="p-primary">
+          {userInfo?.userType === "T"
+            ? "Courses you teach"
+            : "Enrolled courses"}
+        </p>
         {userInfo?.courses &&
           userInfo.courses.map((course) => (
-            <p key={course.courseId}>
+            <p
+              onClick={() => goToCourse(course.courseId)}
+              className="clickable"
+              key={course.courseId}
+            >
               cs {course.courseId} - {course.courseName}
             </p>
           ))}

@@ -1,9 +1,6 @@
 import { CourseDto } from "./course-list";
+import { User } from "../models";
 
-export interface UserProfileDto {
-  firstName: string;
-  lastName: string;
-  email: string;
-  userType: 'T' | 'S';
+export interface UserProfileDto extends User {
   courses?: CourseDto[];
 }

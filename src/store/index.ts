@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./features/auth/authSlice";
 import courseReducer from "./features/courses/coursesSlice";
+import courseDetailReducer from "./features/courses/detail/courseDetailSlice";
 import { authApi } from "./services/auth/atuhService";
 
 const store = configureStore({
   reducer: {
     auth: authReducer,
+    courseDetail: courseDetailReducer,
     course: courseReducer,
     [authApi.reducerPath]: authApi.reducer,
   },

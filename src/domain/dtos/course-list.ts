@@ -1,4 +1,4 @@
 export interface CourseDto {
-  courseId: string
+  courseId: number
   courseName: string
 }

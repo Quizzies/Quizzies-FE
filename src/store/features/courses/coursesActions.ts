@@ -3,6 +3,9 @@ import { CourseDto } from "../../../domain/dtos";
 import { backendURL } from "../../../ts/constants";
 import { setErroMapping } from "../../../ts/utils/error-utils";
 
+/**
+ * Deprecated: we get courses by profile
+ */
 export const coursesList = createAsyncThunk<any, void>(
   "course/list",
   async (_, { rejectWithValue }) => {
