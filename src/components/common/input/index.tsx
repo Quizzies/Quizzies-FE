@@ -8,7 +8,7 @@ export const Input: React.FC<IntersectBaseProps> = (props) => {
   let inputElement = null;
   let inputClasses = [classes.inputElement, props.inputAdditionalStyles];
 
-  if (props.errors) {
+  if (props.errors && props.errors.length) {
     inputClasses = inputClasses.concat(classes.errorField);
   }
 
@@ -68,7 +68,7 @@ export const Input: React.FC<IntersectBaseProps> = (props) => {
       {inputElement}
       {props.errors &&
         props.errors.map((err) => (
-          <p className={classes.errorMessage}>* {err}</p>
+          <p key={err} className={classes.errorMessage}>* {err}</p>
         ))}
     </div>
   );

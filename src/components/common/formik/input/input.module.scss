@@ -1,0 +1,62 @@
+@import '../../../../assets/scss/variables';
+
+.inputElement {
+  display: block;
+  height: 40px;
+  padding-left: 20px;
+  border-radius: 4px;
+  border: 0.5px solid #C6C6C6;
+  width: 100%;
+
+  &.errorField {
+    border-color: #ec5a5a;
+    box-shadow: #ffbcbc 0px 0px 0.5px 2px;
+
+    &:focus {
+      outline: none;
+      border: 1px solid #ec5a5a !important;
+    }
+  }
+}
+
+.formControl {
+  display: block;
+  margin: 15px auto;
+  min-width: 80%;
+  input, textarea, select {
+    font-family: 'Monserrat', sans-serif;
+  }
+
+  .label {
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  &.mb {
+    margin-bottom: 40px;
+  }
+
+  .errorMessage {
+    color: rgb(229, 62, 62);
+    margin-top: 0.5rem;
+    font-size: 0.7rem;
+  }
+}
+
+textarea {
+  padding-top: 20px;
+  padding-right: 20px;
+  height: 200px !important;
+  resize: none;
+}
+
+::placeholder {
+  color: $light-shadow;
+}
+
+input[type=text], input[type=number], input[type=password], textarea {
+  &:focus {
+    outline: none;
+    border: 1px solid $secondary-color;
+  }
+}

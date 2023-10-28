@@ -6,7 +6,7 @@ import { coursesList } from "./coursesActions";
 const initialState: CoursesState = {
   loading: false,
   courses: [],
-  errors: null,
+  errors: {},
   success: false,
 };
 
@@ -18,7 +18,7 @@ const courseSlice = createSlice<CoursesState, any>({
     // deprecated
     [coursesList.pending as any]: (state: CoursesState) => {
       state.loading = true
-      state.errors = null
+      state.errors = {}
     },
     [coursesList.fulfilled as any]: (state: CoursesState, { payload }: PayloadAction<CourseDto[]>) => {
       state.loading = false

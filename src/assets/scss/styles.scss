@@ -20,6 +20,7 @@ body {
   height: 100%;
 }
 
+label,
 p,
 h1,
 h2,
@@ -46,6 +47,11 @@ h6,
 
 .call-to-action {
   text-align: center;
+  display: block;
+}
+
+.call-to-action.left {
+  text-align: left;
 }
 
 ul {

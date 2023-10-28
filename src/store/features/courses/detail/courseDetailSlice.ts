@@ -7,7 +7,7 @@ const initialState: CourseDetailState = {
   courseId: 0,
   courseName: "",
   quizzes: [],
-  errors: null,
+  errors: {},
   success: false,
 };
 
@@ -19,18 +19,17 @@ const courseDetailSlice = createSlice<CourseDetailState, any>({
     // list courses for instructor or student
     [courseQuizzes.pending as any]: (state: CourseDetailState) => {
       state.loading = true;
-      state.errors = null;
+      state.errors = {};
     },
     [courseQuizzes.fulfilled as any]: (
       state: CourseDetailState,
       { payload }: PayloadAction<CourseDetailState>
     ) => {
       state.loading = false;
-      state.courseId = payload.courseId
-      state.courseName = payload.courseName
-      state.quizzes = payload.quizzes
+      state.courseId = payload.courseId;
+      state.courseName = payload.courseName;
+      state.quizzes = payload.quizzes;
       state.success = true;
-
     },
     [courseQuizzes.rejected as any]: (
       state: CourseDetailState,
