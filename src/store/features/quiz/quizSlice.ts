@@ -2,7 +2,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { QuizDetail, QuizQuestionDetail } from "../../../domain/dtos";
 import { QuizState } from "../../../ts/types/app-state-types";
 import { createQuiz, getQuiz, updateQuiz } from "./quizAction";
-import { createQuizAnswers } from "./answer/quizAnswerAction";
+import { createQuizAnswers, getQuizAnswers } from "./answer/quizAnswerAction";
 
 const initialState: QuizState = {
   loading: false,
@@ -46,7 +46,8 @@ const quizSlice = createSlice<QuizState, any>({
     [updateQuiz.fulfilled as any]: (
       state: QuizState,
       { payload }: PayloadAction<QuizDetail>
-    ) => { // state updates trigger a rerender
+    ) => {
+      // state updates trigger a rerender
       state.loading = false;
       state.success = true;
       state.courseName = payload.courseName;
@@ -90,7 +91,17 @@ const quizSlice = createSlice<QuizState, any>({
       state.courseName = payload.courseName;
       state.quizName = payload.quizName;
       state.quizId = payload.quizId;
-    }
+    },
+    // get question answers
+    [getQuizAnswers.fulfilled as any]: (
+      state: QuizState,
+      { payload }: PayloadAction<QuizQuestionDetail>
+    ) => {
+      state.courseName = payload.courseName;
+      state.quizName = payload.quizName;
+      state.loading = false;
+      state.success = true;
+    },
   },
 });
 

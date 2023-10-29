@@ -2,7 +2,7 @@
 
 module.exports = function (req, res, next) {
   console.log(req.url);
-  if (req.url === "/quiz-answers/1" && req.method === "POST") {
+  if (req.url === "/quiz-answers/1") {
     // question answer post
     return res.status(201).json({
       courseName: "cs 1980 - Data structures and algorithms",
@@ -12,11 +12,13 @@ module.exports = function (req, res, next) {
       questionTypeId: 3,
       questionTxt: "What is the time complexity of merge sort?",
       answers: [
-        {
+        { 
+          answerId: 1,
           answerValue: "b ^ 2",
           isCorrect: false,
         },
         {
+          answerId: 2,
           answerValue: "log n",
           isCorrect: false,
         },

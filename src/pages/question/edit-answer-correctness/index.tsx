@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import {
@@ -8,14 +9,19 @@ import {
   SectionContainer,
 } from "../../../components";
 import Spinner from "../../../components/common/spinner";
+import { QuizAnswer } from "../../../domain/models";
 import { RootState } from "../../../store";
+import {
+  getQuizAnswers,
+  updateQuizAnswers,
+} from "../../../store/features/quiz/answer/quizAnswerAction";
+import { updateAnswerChoice } from "../../../store/features/quiz/answer/quizAnswerSlice";
 import { QuestionTypeEnum } from "../../../ts/enums";
-import { updateQuizAnswers } from "../../../store/features/quiz/answer/quizAnswerAction";
 
 export const EditAnswerCorrectness = () => {
   const {
-    quizQuestion: { questionTxt, questionTypeId, loading },
-    quizAnswer: { questionAnswers },
+    quizQuestion: { questionTxt, questionTypeId },
+    quizAnswer: { questionAnswers, loading },
     quiz: { courseName, quizName },
   } = useSelector((state: RootState) => {
     return {
@@ -30,13 +36,19 @@ export const EditAnswerCorrectness = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (questionId && questionAnswers.length === 0) {
+      dispatch(getQuizAnswers(+questionId!) as any);
+    }
+  }, [questionId]);
+
   if (loading) return <Spinner type="spinner" />;
 
   function goBack() {
     // navigate(`/course/${courseId}/create-quiz`);
   }
 
-  function updateAnswers() {
+  function submitUpdatedAnswers() {
     dispatch(
       updateQuizAnswers({
         form: questionAnswers,
@@ -45,26 +57,43 @@ export const EditAnswerCorrectness = () => {
     );
   }
 
+  function updateAnswer(
+    id: number,
+    option: QuestionTypeEnum.MULTIPLE_CHOICE | QuestionTypeEnum.SINGLE_CHOICE
+  ) {
+    const payload = {
+      id,
+      option,
+    };
+
+    dispatch(updateAnswerChoice(payload));
+  }
+
   const displayUI = () => {
-    if (questionTypeId === QuestionTypeEnum.MULTIPLE_CHOICE) {
+    if (questionTypeId === QuestionTypeEnum.SINGLE_CHOICE) {
+      let options = [];
+      options = questionAnswers.map((answer: QuizAnswer) => {
+        return {
+          checked: answer.isCorrect,
+          name: answer.answerId,
+          label: answer.answerValue,
+        };
+      });
       return (
         <>
           <p className="call-to-action left">
             From the choices created, which is the correct answer?
           </p>
-          {questionAnswers.map((answer: any, idx: number) => {
-            return (
-              <div key={answer.answerValue + idx} className="mt-1">
-                <Input
-                  elementType="checkbox"
-                  additionalStyles="m-0"
-                  option={answer.answerValue}
-                  label={answer.answerValue}
-                  changed={(e) => console.log(e)}
-                />
-              </div>
-            );
-          })}
+          <div className="mt-1">
+            <Input
+              elementType="radio"
+              additionalStyles="m-0"
+              options={options}
+              changed={(id: number) =>
+                updateAnswer(id, QuestionTypeEnum.SINGLE_CHOICE)
+              }
+            />
+          </div>
         </>
       );
     } else {
@@ -76,7 +105,7 @@ export const EditAnswerCorrectness = () => {
           <p className="call-to-action left">
             From the choices created, which is the correct answer?
           </p>
-          {questionAnswers.map((answer: any, idx: number) => {
+          {questionAnswers.map((answer: QuizAnswer, idx: number) => {
             return (
               <div key={answer.answerValue + idx} className="mt-1">
                 <Input
@@ -84,7 +113,12 @@ export const EditAnswerCorrectness = () => {
                   additionalStyles="m-0"
                   option={""}
                   label={answer.answerValue}
-                  changed={() => {}}
+                  changed={() =>
+                    updateAnswer(
+                      answer.answerId!,
+                      QuestionTypeEnum.MULTIPLE_CHOICE
+                    )
+                  }
                 />
               </div>
             );
@@ -120,7 +154,7 @@ export const EditAnswerCorrectness = () => {
               <PrimaryButton
                 additionalStyles="button button-secondary button-submit"
                 value="Next"
-                onClick={updateAnswers}
+                onClick={submitUpdatedAnswers}
               />
             </>
           </Flex>

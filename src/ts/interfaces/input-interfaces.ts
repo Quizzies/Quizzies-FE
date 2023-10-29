@@ -31,7 +31,7 @@ export interface IInput {
   invalid?: boolean;
   shouldValidate?: boolean;
   touched?: boolean;
-  changed: changeHandler<any>;
+  changed: any;
   errors?: string[];
   label?: string;
   options?: any[] | ISelectOptions[];

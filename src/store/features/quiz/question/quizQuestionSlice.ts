@@ -2,7 +2,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { QuizQuestionDetail } from "../../../../domain/dtos";
 import { QuizQuestion } from "../../../../domain/models/quiz-question";
 import { QuizQuestionState } from "../../../../ts/types/app-state-types";
-import { createQuizAnswers } from "../answer/quizAnswerAction";
+import { createQuizAnswers, getQuizAnswers } from "../answer/quizAnswerAction";
 import { createQuizQuestion, getQuizQuestion } from "./quizQuestionAction";
 
 const initialState: QuizQuestionState = {
@@ -67,7 +67,18 @@ const quizQuestionSlice = createSlice<QuizQuestionState, any>({
       state.questionTypeId = payload.questionTypeId;
       state.questionId = payload.questionId;
       state.quizId = payload.quizId;
-    }
+    },
+    // get question answers
+    [getQuizAnswers.fulfilled as any]: (
+      state: QuizQuestionState,
+      { payload }: PayloadAction<QuizQuestionDetail>
+    ) => {
+      state.loading = false;
+      state.success = true;
+      state.questionId = payload.questionId;
+      state.questionTxt = payload.questionTxt;
+      state.questionTypeId = payload.questionTypeId;
+    },
   },
 });
 

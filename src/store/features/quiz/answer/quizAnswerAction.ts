@@ -44,6 +44,7 @@ export const createQuizAnswers = createAsyncThunk<any, { questionId: number, for
 export const updateQuizAnswers = createAsyncThunk<any, { questionId: number, form: QuizAnswer[] }>(
   "quiz-answers/update",
   async (input, { rejectWithValue }) => {
+    debugger
     try {
       const response = await fetch(`${backendURL}/quiz-answers/${input.questionId}`, {
         method: "PUT",
@@ -52,6 +53,33 @@ export const updateQuizAnswers = createAsyncThunk<any, { questionId: number, for
           Authorization: `Bearer ${getToken()}`,
         },
         body: JSON.stringify(input.form),
+      });
+
+      if (!response.ok) {
+        const error = await response.text();
+        throw new Error(error);
+      }
+
+      const data = (await response.json()) as QuizQuestionDetail;
+
+      return data;
+    } catch (error: any) {
+      const errorResponse = setErroMapping(error);
+      return rejectWithValue(errorResponse);
+    }
+  }
+);
+
+export const getQuizAnswers = createAsyncThunk<any, number>(
+  "quiz-answers/update",
+  async (questionId, { rejectWithValue }) => {
+    try {
+      const response = await fetch(`${backendURL}/quiz-answers/${questionId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${getToken()}`,
+        }
       });
 
       if (!response.ok) {
