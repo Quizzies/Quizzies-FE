@@ -26,7 +26,6 @@ export const CourseQuizzes = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(userInfo)
     if (id) dispatch(courseQuizzes(+id) as any);
   }, [id]);
 
@@ -37,7 +36,7 @@ export const CourseQuizzes = () => {
   }
 
   function goBack() {
-    navigate(-1);
+    navigate('/');
   }
 
   return (
@@ -46,11 +45,8 @@ export const CourseQuizzes = () => {
         <p>{"cs " + courseId + " - " + courseName}</p>
       </SectionContainer>
       <SectionContainer additionalStyles="pt-0 mb-2">
-        <p className="header-title">Courses</p>
+        <p className="header-title">Quizzes</p>
         <hr className="fit" />
-      </SectionContainer>
-      <SectionContainer additionalStyles="py-0">
-        <p className="p-primary">Quizzes</p>
       </SectionContainer>
       <SectionContainer additionalStyles="pt-0">
         <p className="p-primary">
@@ -70,7 +66,7 @@ export const CourseQuizzes = () => {
           ))}
 
         {userInfo?.userType === "T" ? (
-          <p className="p-primary" onClick={createQuiz}>Create a quiz</p>
+          <p className="p-primary clickable" onClick={createQuiz}>Create a quiz</p>
         ) : null}
       </SectionContainer>
       <OutlineButton additionalStyles="stack-end" value="Back" onClick={goBack}></OutlineButton>

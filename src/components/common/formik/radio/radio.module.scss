@@ -1,0 +1,9 @@
+.radio-group {
+  * {
+    display: inline !important;
+    margin: 10px 0;
+  }
+  input[type=radio] {
+    margin-right: 1rem !important;
+  }
+}

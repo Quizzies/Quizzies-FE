@@ -108,6 +108,10 @@ section {
     padding-top: 0 !important;
     padding-bottom: 0 !important;
   }
+  &-0\.5 {
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem  !important;
+  }
   &-1 {
     padding-top: 1rem !important;
     padding-bottom: 1rem !important;
@@ -220,6 +224,27 @@ section {
   }
 }
 
+.pr {
+  &-0 {
+    padding-right: 0rem !important;
+  }
+  &-0\.5 {
+    padding-right: 0.5rem !important;
+  }
+  &-1 {
+    padding-right: 1rem !important;
+  }
+  &-2 {
+    padding-right: 2rem !important;
+  }
+  &-3 {
+    padding-right: 3rem !important;
+  }
+  &-4 {
+    padding-right: 4rem !important;
+  }
+}
+
 .pt {
   &-0 {
     padding-top: 0rem !important;
@@ -256,6 +281,10 @@ section {
 }
 
 .mt {
+  &-0\.5 {
+    margin-top: 0.5rem !important;
+    margin-bottom: 0 !important;
+  }
   &-1 {
     margin-top: 1rem !important;
     margin-bottom: 0 !important;
