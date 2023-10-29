@@ -21,7 +21,7 @@ export const RadioButtons: React.FC<IRadioButton> = (props) => {
                 id={i.toString()}
               />
               <span>&nbsp;{input.label}</span>
-            </div>
+            </div> 
           );
         })}
     </div>
