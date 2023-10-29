@@ -53,9 +53,6 @@ export const FInput = ({ field, form, ...props }: FormikProps) => {
         />
       );
       break;
-    case "select":
-      inputElement = <Select value={props.value} items={props.options} onChange={props.onChange} />;
-      break;
     case "radio":
       inputElement = (
         <RadioButtons inputs={props.options} onCheckChange={props.onChange} />

@@ -15,7 +15,6 @@ import { QuizInput } from "../../domain/dtos";
 import { RootState } from "../../store";
 import { courseQuizzes } from "../../store/features/courses/detail/courseDetailActions";
 import { updateQuiz } from "../../store/features/quiz/quizAction";
-import { updateQuizField } from "../../store/features/quiz/quizSlice";
 
 const quizSchema = object({
   quizName: string().required(),
@@ -46,7 +45,6 @@ export const CreateQuiz = () => {
 
   useEffect(() => {
     if (quizId !== undefined) {
-      debugger
       navigate(`/quiz/${quizId}/add-question`);
     }
   }, [quizId]);
@@ -58,7 +56,7 @@ export const CreateQuiz = () => {
   }
 
   const handleChange = (field: string) => (evt: any) => {
-    dispatch(updateQuizField({ field, value: evt.target.value }));
+
   };
 
   return (

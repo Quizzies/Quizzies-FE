@@ -8,5 +8,6 @@ export { default as FInput } from './common/formik/input';
 export { default as Select } from './common/formik/select';
 export { default as ProtectedRoute } from './common/protected-route';
 export { default as Flex } from './common/hoc/flex';
+export { default as AddChoiceBox } from './common/add-box';
 export { default as LoginLayout } from './hoc/login-layout';
 export { default as MainLayout } from './hoc/main-layout';

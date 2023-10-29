@@ -2,7 +2,6 @@ import { IntersectBaseProps } from "../../../ts/types/input-types";
 import classes from "./input.module.scss";
 import CheckBox from "./checkbox";
 import RadioButtons from "./radio";
-import Select from "./select";
 
 export const Input: React.FC<IntersectBaseProps> = (props) => {
   let inputElement = null;
@@ -35,9 +34,6 @@ export const Input: React.FC<IntersectBaseProps> = (props) => {
         />
       );
       break;
-    case "select":
-      inputElement = <Select value={props.value} items={props.options} onChange={() => {}} />;
-      break;
     case "radio":
       inputElement = (
         <RadioButtons inputs={props.options} onCheckChange={props.changed} />
@@ -45,7 +41,7 @@ export const Input: React.FC<IntersectBaseProps> = (props) => {
       break;
     case "checkbox":
       inputElement = (
-        <CheckBox input={props.option} onCheckChange={props.changed} />
+        <CheckBox input={props.option} onCheckChange={props.changed} label={props.label!} />
       );
       break;
     default:
@@ -62,7 +58,7 @@ export const Input: React.FC<IntersectBaseProps> = (props) => {
 
   return (
     <div className={`${classes.formControl} ${props.additionalStyles}`}>
-      {props.label ? (
+      {props.label && props.elementType !== 'checkbox' ? (
         <label className={classes.label}>{props.label}</label>
       ) : null}
       {inputElement}

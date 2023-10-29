@@ -15,7 +15,6 @@ import Spinner from "../../../components/common/spinner";
 import { QuizQuestionInput } from "../../../domain/dtos/quiz-question-input";
 import { RootState } from "../../../store";
 import { getQuestionTypes } from "../../../store/features/quiz/question-types/questionTypesAction";
-import { updateQuestionField } from "../../../store/features/quiz/question/quizQuestionSlice";
 import { getQuiz } from "../../../store/features/quiz/quizAction";
 import { createQuizQuestion } from "../../../store/features/quiz/question/quizQuestionAction";
 
@@ -52,7 +51,7 @@ export const AddQuestion = () => {
 
   useEffect(() => {
     if (questionId !== undefined) {
-      navigate(`/question/${questionId}/add-question`);
+      navigate(`/question/${questionId}`);
     }
   }, [questionId]);
 
@@ -63,7 +62,6 @@ export const AddQuestion = () => {
   }
 
   const handleChange = (field: string) => (evt: any) => {
-    dispatch(updateQuestionField({ field, value: evt.target.value }));
   };
 
   return (
@@ -85,7 +83,7 @@ export const AddQuestion = () => {
           <Form className="container form-w-sm">
             <Field
               type="text"
-              label="Name"
+              label="Question Text"
               name="questionTxt"
               component={FInput}
               placeholder="Enter question text"
@@ -97,6 +95,7 @@ export const AddQuestion = () => {
               {({ field }: any) => ( // working with custom Select component
                 <Select
                   {...field}
+                  label="Question type"
                   items={questionTypes.map((item) => {
                     return { id: item.questionTypeId, value: item.name };
                   })}

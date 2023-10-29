@@ -1,7 +1,8 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { QuizDetail } from "../../../domain/dtos";
+import { QuizDetail, QuizQuestionDetail } from "../../../domain/dtos";
 import { QuizState } from "../../../ts/types/app-state-types";
 import { createQuiz, getQuiz, updateQuiz } from "./quizAction";
+import { createQuizAnswers } from "./answer/quizAnswerAction";
 
 const initialState: QuizState = {
   loading: false,
@@ -66,7 +67,7 @@ const quizSlice = createSlice<QuizState, any>({
     [getQuiz.fulfilled as any]: (
       state: QuizState,
       { payload }: PayloadAction<QuizDetail>
-    ) => { // state updates trigger a rerender
+    ) => {
       state.loading = false;
       state.success = true;
       state.courseName = payload.courseName;
@@ -79,9 +80,18 @@ const quizSlice = createSlice<QuizState, any>({
       state.loading = false;
       state.errors = payload;
     },
+    // update question when answers to question are saved
+    [createQuizAnswers.fulfilled as any]: (
+      state: QuizState,
+      { payload }: PayloadAction<QuizQuestionDetail>
+    ) => {
+      state.loading = false;
+      state.success = true;
+      state.courseName = payload.courseName;
+      state.quizName = payload.quizName;
+      state.quizId = payload.quizId;
+    }
   },
 });
-
-export const { updateQuizField } = quizSlice.actions as any
 
 export default quizSlice.reducer;

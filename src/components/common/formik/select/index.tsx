@@ -20,7 +20,7 @@ const Dropdown: FC<IntersectPropsSelect> = (props) => {
     if (!selection.some((current) => current.id === item.id)) {
       if (!props.multiSelect) {
         setSelection([item]);
-        props.onChange!({ target: { value: item.id }} as any)
+        props.onChange!({ target: { value: item.id } } as any);
       }
     } else if (props.multiSelect) {
       setSelection([...selection, item]);
@@ -45,26 +45,31 @@ const Dropdown: FC<IntersectPropsSelect> = (props) => {
   }
 
   return (
-    <div className="custom-select" ref={container} onClick={() => toggle()}>
-      <div className={dropdownTitleContainer.join(" ")}>
-        <p>{selection.length > 0 ? selection[0].value : props.value}</p>
-      </div>
-      <div>
-        {props.tags &&
-          props.tags.map((tag: ISelectOptions) => {
-            return <p key={tag.id}>{tag.value}</p>;
-          })}
-      </div>
-      {open && (
-        <div className="select-items">
-          {props.items.map((item: ISelectOptions) => (
-            <div key={item.id} onClick={() => handleOnClick(item)}>
-              <span>{item.value}</span>
-            </div>
-          ))}
+    <>
+      {props.label ? (
+        <label className="call-to-action left">{props.label}</label>
+      ) : null}
+      <div className="custom-select" ref={container} onClick={() => toggle()}>
+        <div className={dropdownTitleContainer.join(" ")}>
+          <p>{selection.length > 0 ? selection[0].value : props.value}</p>
         </div>
-      )}
-    </div>
+        <div>
+          {props.tags &&
+            props.tags.map((tag: ISelectOptions) => {
+              return <p key={tag.id}>{tag.value}</p>;
+            })}
+        </div>
+        {open && (
+          <div className="select-items">
+            {props.items.map((item: ISelectOptions) => (
+              <div key={item.id} onClick={() => handleOnClick(item)}>
+                <span>{item.value}</span>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </>
   );
 };
 

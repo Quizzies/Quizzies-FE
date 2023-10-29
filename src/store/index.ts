@@ -4,6 +4,7 @@ import courseReducer from "./features/courses/coursesSlice";
 import courseDetailReducer from "./features/courses/detail/courseDetailSlice";
 import quizReducer from "./features/quiz/quizSlice";
 import quizQuestionReducer from "./features/quiz/question/quizQuestionSlice";
+import quizAnswerReducer from "./features/quiz/answer/quizAnswerSlice";
 import questionTypesReducer from "./features/quiz/question-types/questionTypesSlice";
 import { authApi } from "./services/auth/atuhService";
 
@@ -14,6 +15,7 @@ const store = configureStore({
     course: courseReducer,
     quiz: quizReducer,
     quizQuestion: quizQuestionReducer,
+    quizAnswer: quizAnswerReducer,
     questionTypes: questionTypesReducer,
     [authApi.reducerPath]: authApi.reducer,
   },
