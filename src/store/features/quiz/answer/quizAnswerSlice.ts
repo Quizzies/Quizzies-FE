@@ -2,7 +2,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { QuizQuestionDetail } from "../../../../domain/dtos";
 import { QuizAnswer } from "../../../../domain/models";
 import { QuizAnswerState } from "../../../../ts/types/app-state-types";
-import { createQuizAnswers, getQuizAnswers } from "./quizAnswerAction";
+import { createQuizAnswers, getQuizAnswers, updateQuizAnswers } from "./quizAnswerAction";
 import { QuestionTypeEnum } from "../../../../ts/enums";
 
 const initialState: QuizAnswerState = {
@@ -10,6 +10,7 @@ const initialState: QuizAnswerState = {
   questionAnswers: [],
   errors: {},
   success: false,
+  submitted: false
 };
 
 const quizAnswerSlice = createSlice<QuizAnswerState, any>({
@@ -70,6 +71,27 @@ const quizAnswerSlice = createSlice<QuizAnswerState, any>({
       state.questionAnswers = payload.answers!;
     },
     [createQuizAnswers.rejected as any]: (
+      state: QuizAnswerState,
+      { payload }: any
+    ) => {
+      state.loading = false;
+      state.errors = payload;
+    },
+    // update quiz answers
+    [updateQuizAnswers.pending as any]: (state: QuizAnswerState) => {
+      state.loading = true;
+      state.errors = {};
+    },
+    [updateQuizAnswers.fulfilled as any]: (
+      state: QuizAnswerState,
+      { payload }: PayloadAction<QuizQuestionDetail>
+    ) => {
+      state.loading = false;
+      state.success = true;
+      state.questionAnswers = payload.answers!;
+      state.submitted = true;
+    },
+    [updateQuizAnswers.rejected as any]: (
       state: QuizAnswerState,
       { payload }: any
     ) => {

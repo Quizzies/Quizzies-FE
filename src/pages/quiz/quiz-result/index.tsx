@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import {
@@ -18,7 +18,7 @@ import {
 import { updateAnswerChoice } from "../../../store/features/quiz/answer/quizAnswerSlice";
 import { QuestionTypeEnum } from "../../../ts/enums";
 
-export const EditAnswerCorrectness = () => {
+export const QuizResult = () => {
   const {
     quizQuestion: { questionTxt, questionTypeId },
     quizAnswer: { questionAnswers, loading, submitted },
@@ -43,8 +43,8 @@ export const EditAnswerCorrectness = () => {
   }, [questionId]);
 
   useEffect(() => {
-    submitted && navigate(`/quiz/${quizId}/results`)
-  }, [submitted])
+    submitted && navigate(`/quiz/${quizId}/results`);
+  }, [submitted]);
 
   if (loading) return <Spinner type="spinner" />;
 
@@ -168,4 +168,4 @@ export const EditAnswerCorrectness = () => {
   );
 };
 
-export default EditAnswerCorrectness;
+export default QuizResult;

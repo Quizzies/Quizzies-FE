@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { OutlineButton, SectionContainer } from "../../components";
-import Spinner from "../../components/common/spinner";
-import { RootState } from "../../store";
-import { courseQuizzes } from "../../store/features/courses/detail/courseDetailActions";
+import { OutlineButton, SectionContainer } from "../../../components";
+import Spinner from "../../../components/common/spinner";
+import { RootState } from "../../../store";
+import { courseQuizzes } from "../../../store/features/courses/detail/courseDetailActions";
 
 export const CourseQuizzes = () => {
   // https://stackoverflow.com/questions/53835816/decode-jwt-token-react

@@ -28,4 +28,4 @@ export type QuizQuestionState = QuizQuestion & AppState<QuizQuestionInput>;
 export type QuestionTypeState = {
   questionTypes: QuestionType[];
 } & AppState<{}>;
-export type QuizAnswerState = { questionAnswers: QuizAnswer[] } & AppState<{}>;
+export type QuizAnswerState = { questionAnswers: QuizAnswer[], submitted: boolean } & AppState<{}>;
