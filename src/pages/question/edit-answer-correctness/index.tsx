@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import {
@@ -21,8 +21,8 @@ import { QuestionTypeEnum } from "../../../ts/enums";
 export const EditAnswerCorrectness = () => {
   const {
     quizQuestion: { questionTxt, questionTypeId },
-    quizAnswer: { questionAnswers, loading },
-    quiz: { courseName, quizName },
+    quizAnswer: { questionAnswers, loading, submitted },
+    quiz: { courseName, quizName, quizId },
   } = useSelector((state: RootState) => {
     return {
       quizQuestion: state.quizQuestion,
@@ -37,10 +37,14 @@ export const EditAnswerCorrectness = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (questionId && questionAnswers.length === 0) {
+    if (questionId) {
       dispatch(getQuizAnswers(+questionId!) as any);
     }
   }, [questionId]);
+
+  useEffect(() => {
+    submitted && navigate(`/quiz/${quizId}/summary`)
+  }, [submitted])
 
   if (loading) return <Spinner type="spinner" />;
 

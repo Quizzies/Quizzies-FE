@@ -44,7 +44,6 @@ export const createQuizAnswers = createAsyncThunk<any, { questionId: number, for
 export const updateQuizAnswers = createAsyncThunk<any, { questionId: number, form: QuizAnswer[] }>(
   "quiz-answers/update",
   async (input, { rejectWithValue }) => {
-    debugger
     try {
       const response = await fetch(`${backendURL}/quiz-answers/${input.questionId}`, {
         method: "PUT",
@@ -71,7 +70,7 @@ export const updateQuizAnswers = createAsyncThunk<any, { questionId: number, for
 );
 
 export const getQuizAnswers = createAsyncThunk<any, number>(
-  "quiz-answers/update",
+  "quiz-answers/get",
   async (questionId, { rejectWithValue }) => {
     try {
       const response = await fetch(`${backendURL}/quiz-answers/${questionId}`, {

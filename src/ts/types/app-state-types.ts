@@ -3,6 +3,7 @@ import {
   CourseOverview,
   QuizDetail,
   QuizInput,
+  QuizResultDto,
   RegisterInput,
 } from "../../domain/dtos";
 import { QuizQuestionInput } from "../../domain/dtos/quiz-question-input";
@@ -23,9 +24,10 @@ export type AppState<T> = {
 export type AuthState = AuthUser & AppState<RegisterInput>;
 export type CoursesState = { courses: CourseDto[] } & AppState<{}>;
 export type CourseDetailState = CourseOverview & AppState<{}>;
-export type QuizState = QuizDetail & AppState<QuizInput>;
+export type QuizState = QuizDetail & { updated: boolean } & AppState<QuizInput>;
 export type QuizQuestionState = QuizQuestion & AppState<QuizQuestionInput>;
 export type QuestionTypeState = {
   questionTypes: QuestionType[];
 } & AppState<{}>;
-export type QuizAnswerState = { questionAnswers: QuizAnswer[] } & AppState<{}>;
+export type QuizAnswerState = { questionAnswers: QuizAnswer[], submitted: boolean } & AppState<{}>;
+export type QuizResultState = QuizResultDto & AppState<{}>;

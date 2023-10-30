@@ -8,7 +8,7 @@ export const createQuiz = createAsyncThunk<any, QuizInput>(
   "quiz/create",
   async (form, { rejectWithValue }) => {
     try {
-      const response = await fetch(`${backendURL}/quiz`, {
+      const response = await fetch(`${backendURL}/quizzes`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -32,17 +32,17 @@ export const createQuiz = createAsyncThunk<any, QuizInput>(
   }
 );
 
-export const updateQuiz = createAsyncThunk<any, QuizInput>(
+export const updateQuiz = createAsyncThunk<any, { quiz: QuizInput, quizId: number }>(
   "quiz/update",
   async (form, { rejectWithValue }) => {
     try {
-      const response = await fetch(`${backendURL}/quizzes`, {
+      const response = await fetch(`${backendURL}/quizzes/${form.quizId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${getToken()}`,
         },
-        body: JSON.stringify(form),
+        body: JSON.stringify(form.quiz),
       });
 
       if (!response.ok) {

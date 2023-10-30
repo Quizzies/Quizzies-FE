@@ -18,7 +18,7 @@ export const CheckBox: React.FC<ICheckBox> = (props: ICheckBox) => {
         />
         <span className={classes.checkmark}></span>
       </label>
-      <label>{props.label}</label>
+      <label style={{ fontSize: 14 }}>{props.label}</label>
       <br></br>
     </>
   );

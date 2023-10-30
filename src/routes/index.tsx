@@ -11,8 +11,10 @@ import {
   DashBoard,
   EditAnswerCorrectness,
   Login,
+  QuizResults,
+  QuizSummary,
 } from "../pages";
-import { CreateQuiz } from "../pages/create-quiz/create-quiz";
+import { CreateQuiz } from "../pages/quiz/create-quiz";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -21,8 +23,10 @@ const router = createBrowserRouter(
         <Route path="/" element={<DashBoard />} />
         <Route path="/course/:id" element={<CourseQuizzes />} />
         <Route path="/course/:courseId/create-quiz" element={<CreateQuiz />} />
+        <Route path="/quiz/:quizId/results" element={<QuizResults />} />
         <Route path="/quiz/:quizId/add-question" element={<AddQuestion />} />
         <Route path="/question/:questionId" element={<AddChoices />} />
+        <Route path="/quiz/:quizId/summary" element={<QuizSummary />} />
         <Route
           path="/question/:questionId/edit"
           element={<EditAnswerCorrectness />}
