@@ -7,7 +7,7 @@ import { RootState } from "../../../store";
 import { getQuiz, updateQuiz } from "../../../store/features/quiz/quizAction";
 import { updateIsPosted } from "../../../store/features/quiz/quizSlice";
 
-export const QuizResult = () => {
+export const QuizSummary = () => {
   const {
     quiz,
     quiz: {
@@ -102,4 +102,4 @@ export const QuizResult = () => {
   );
 };
 
-export default QuizResult;
+export default QuizSummary;

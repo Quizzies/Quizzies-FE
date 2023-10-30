@@ -6,3 +6,4 @@ export * from "./quiz-detail";
 export * from "./quiz-input";
 export * from "./user-profile";
 export * from "./quiz-question-detail";
+export * from './quiz-result-dto';

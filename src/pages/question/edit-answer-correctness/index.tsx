@@ -43,7 +43,7 @@ export const EditAnswerCorrectness = () => {
   }, [questionId]);
 
   useEffect(() => {
-    submitted && navigate(`/quiz/${quizId}/results`)
+    submitted && navigate(`/quiz/${quizId}/summary`)
   }, [submitted])
 
   if (loading) return <Spinner type="spinner" />;

@@ -3,6 +3,7 @@ import {
   CourseOverview,
   QuizDetail,
   QuizInput,
+  QuizResultDto,
   RegisterInput,
 } from "../../domain/dtos";
 import { QuizQuestionInput } from "../../domain/dtos/quiz-question-input";
@@ -29,3 +30,4 @@ export type QuestionTypeState = {
   questionTypes: QuestionType[];
 } & AppState<{}>;
 export type QuizAnswerState = { questionAnswers: QuizAnswer[], submitted: boolean } & AppState<{}>;
+export type QuizResultState = QuizResultDto & AppState<{}>;
