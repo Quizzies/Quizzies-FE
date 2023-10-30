@@ -1,50 +1,44 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  Flex,
-  Input,
-  OutlineButton,
-  PrimaryButton,
-  SectionContainer,
-} from "../../../components";
+import { Input, PrimaryButton, SectionContainer } from "../../../components";
 import Spinner from "../../../components/common/spinner";
-import { QuizAnswer } from "../../../domain/models";
 import { RootState } from "../../../store";
-import {
-  getQuizAnswers,
-  updateQuizAnswers,
-} from "../../../store/features/quiz/answer/quizAnswerAction";
-import { updateAnswerChoice } from "../../../store/features/quiz/answer/quizAnswerSlice";
-import { QuestionTypeEnum } from "../../../ts/enums";
+import { getQuiz, updateQuiz } from "../../../store/features/quiz/quizAction";
+import { updateIsPosted } from "../../../store/features/quiz/quizSlice";
 
 export const QuizResult = () => {
   const {
-    quizQuestion: { questionTxt, questionTypeId },
-    quizAnswer: { questionAnswers, loading, submitted },
-    quiz: { courseName, quizName, quizId },
+    quiz,
+    quiz: {
+      courseName,
+      dueDate,
+      quizDescription,
+      quizName,
+      timeLimit,
+      isPosted,
+      questions,
+      loading,
+      updated,
+    },
   } = useSelector((state: RootState) => {
-    return {
-      quizQuestion: state.quizQuestion,
-      quizAnswer: state.quizAnswer,
-      quiz: state.quiz,
-    };
+    return { quiz: state.quiz };
   });
 
-  let { questionId } = useParams();
+  let { quizId } = useParams();
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (questionId) {
-      dispatch(getQuizAnswers(+questionId!) as any);
+    if (quizId) {
+      dispatch(getQuiz(+quizId!) as any);
     }
-  }, [questionId]);
+  }, [quizId]);
 
   useEffect(() => {
-    submitted && navigate(`/quiz/${quizId}/results`);
-  }, [submitted]);
+    updated && navigate('/')
+  }, [updated]);
 
   if (loading) return <Spinner type="spinner" />;
 
@@ -52,117 +46,57 @@ export const QuizResult = () => {
     // navigate(`/course/${courseId}/create-quiz`);
   }
 
-  function submitUpdatedAnswers() {
-    dispatch(
-      updateQuizAnswers({
-        form: questionAnswers,
-        questionId: +questionId!,
-      }) as any
-    );
-  }
+  // function goToQuestion(questionId: number) {
+  //   navigate(`/course/${courseId}/create-quiz`);
+  // }
 
-  function updateAnswer(
-    id: number,
-    option: QuestionTypeEnum.MULTIPLE_CHOICE | QuestionTypeEnum.SINGLE_CHOICE
-  ) {
-    const payload = {
-      id,
-      option,
+  // submitting the quiz will only update the isPosted property
+  function submit() {
+    const form = {
+      quiz,
+      quizId: +quizId!,
     };
-
-    dispatch(updateAnswerChoice(payload));
+    dispatch(updateQuiz(form) as any);
   }
-
-  const displayUI = () => {
-    if (questionTypeId === QuestionTypeEnum.SINGLE_CHOICE) {
-      let options = [];
-      options = questionAnswers.map((answer: QuizAnswer) => {
-        return {
-          checked: answer.isCorrect,
-          name: answer.answerId,
-          label: answer.answerValue,
-        };
-      });
-      return (
-        <>
-          <p className="call-to-action left">
-            From the choices created, which is the correct answer?
-          </p>
-          <div className="mt-1">
-            <Input
-              elementType="radio"
-              additionalStyles="m-0"
-              options={options}
-              changed={(id: number) =>
-                updateAnswer(id, QuestionTypeEnum.SINGLE_CHOICE)
-              }
-            />
-          </div>
-        </>
-      );
-    } else {
-      <p className="call-to-action left">
-        From the choices created, which are the correct answers?
-      </p>;
-      return (
-        <>
-          <p className="call-to-action left">
-            From the choices created, which is the correct answer?
-          </p>
-          {questionAnswers.map((answer: QuizAnswer, idx: number) => {
-            return (
-              <div key={answer.answerValue + idx} className="mt-1">
-                <Input
-                  elementType="checkbox"
-                  additionalStyles="m-0"
-                  option={""}
-                  label={answer.answerValue}
-                  changed={() =>
-                    updateAnswer(
-                      answer.answerId!,
-                      QuestionTypeEnum.MULTIPLE_CHOICE
-                    )
-                  }
-                />
-              </div>
-            );
-          })}
-        </>
-      );
-    }
-  };
 
   return (
     <SectionContainer>
-      <SectionContainer additionalStyles="py-0 px-0">
+      <SectionContainer additionalStyles="px-0">
         <p>Course: {courseName}</p>
-        <p>Quiz: {quizName}</p>
+        <p className="mt-2">Quiz: {quizName}</p>
+        <p className="grey-small-text">description: {quizDescription}</p>
+        <p className="grey-small-text">time limit: {timeLimit} minutes</p>
+        <p className="grey-small-text">due date: {dueDate}</p>
+      </SectionContainer>
+
+      <SectionContainer additionalStyles="px-0 py-0">
+        {questions!.map((question, idx) => (
+          <div className="my-2">
+            <p className="call-to-action left">Question {idx + 1}</p>
+            <p
+              //  onClick={() => goToQuestion(question.questionId)}
+              className="clickable"
+            >
+              Quiz: {question.questionTxt}
+            </p>
+          </div>
+        ))}
       </SectionContainer>
 
       <SectionContainer additionalStyles="pt-1 px-0">
-        <div className="container form-w-sm">
-          <SectionContainer additionalStyles="px-0">
-            <p className="call-to-action left"> Question Text</p>
-            <p>{questionTxt}</p>
-          </SectionContainer>
-          <SectionContainer additionalStyles="px-0">
-            {displayUI()}
-          </SectionContainer>
-          <Flex>
-            <>
-              <OutlineButton
-                additionalStyles="button button-submit"
-                value="Back"
-                onClick={goBack}
-              />
-              <PrimaryButton
-                additionalStyles="button button-secondary button-submit"
-                value="Next"
-                onClick={submitUpdatedAnswers}
-              />
-            </>
-          </Flex>
-        </div>
+        <Input
+          elementType="checkbox"
+          additionalStyles="mb-2"
+          option={""}
+          label="Post this quiz"
+          changed={() => dispatch(updateIsPosted(!isPosted))}
+        />
+
+        <PrimaryButton
+          additionalStyles="button button-secondary button-submit m-0"
+          value="Submit"
+          onClick={submit}
+        />
       </SectionContainer>
     </SectionContainer>
   );

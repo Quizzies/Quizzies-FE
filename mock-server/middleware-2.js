@@ -34,8 +34,58 @@ module.exports = function (req, res, next) {
       questionTxt: "What is the time complexity of merge sort?",
     });
   }
-  if (req.url === "/quizzes" && req.method === "PUT") {
-    // quiz update
+  if (req.url === "/quizzes/29" && (req.method === "GET")) {
+    // quiz get
+    return res.status(201).json({
+      quizId: 29,
+      courseId: 1,
+      quizName: "Quiz 1",
+      courseName: "cs 1980 - Data structures and algorithms",
+      quizDescription: "Quiz for lectures 1 and 2",
+      timeLimit: "60",
+      isPosted: false,
+      dueDate: "08/03/2023",
+      questions: [
+        {
+          questionId: 1,
+          questionTypeId: 3,
+          questionTxt: "What is the time complexity of merge sort?",
+          answers: [
+            { 
+              answerId: 1,
+              answerValue: "b ^ 2",
+              isCorrect: true,
+            },
+            {
+              answerId: 2,
+              answerValue: "log n",
+              isCorrect: false,
+            },
+          ],
+        },
+        {
+          questionId: 2,
+          questionTypeId: 2,
+          questionTxt: "What is bogo sort?",
+          answers: [
+            { 
+              answerId: 3,
+              answerValue: "Worst algorithm ever",
+              isCorrect: false,
+            },
+            {
+              answerId: 4,
+              answerValue: "Best algorithm ever",
+              isCorrect: true,
+            },
+          ],
+        }
+      ]
+
+    });
+  }
+  if (req.url === "/quizzes" && (req.method === "POST" || req.method === "PUT")) {
+    // quiz update / post
     return res.status(201).json({
       quizId: 29,
       courseName: "cs 1980 - Data structures and algorithms",

@@ -14,7 +14,7 @@ import Spinner from "../../../components/common/spinner";
 import { QuizInput } from "../../../domain/dtos";
 import { RootState } from "../../../store";
 import { courseQuizzes } from "../../../store/features/courses/detail/courseDetailActions";
-import { updateQuiz } from "../../../store/features/quiz/quizAction";
+import { createQuiz, updateQuiz } from "../../../store/features/quiz/quizAction";
 
 const quizSchema = object({
   quizName: string().required(),
@@ -73,7 +73,7 @@ export const CreateQuiz = () => {
         }}
         validationSchema={quizSchema}
         onSubmit={(values) => {
-          dispatch(updateQuiz(values) as any);
+          dispatch(createQuiz(values) as any);
         }}
       >
         <Form className="container form-w-sm">

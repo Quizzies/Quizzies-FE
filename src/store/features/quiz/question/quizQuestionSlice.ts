@@ -1,13 +1,14 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { QuizQuestionDetail } from "../../../../domain/dtos";
+import { QuizDetail, QuizQuestionDetail } from "../../../../domain/dtos";
 import { QuizQuestion } from "../../../../domain/models/quiz-question";
 import { QuizQuestionState } from "../../../../ts/types/app-state-types";
 import { createQuizAnswers, getQuizAnswers } from "../answer/quizAnswerAction";
+import { getQuiz } from "../quizAction";
 import { createQuizQuestion, getQuizQuestion } from "./quizQuestionAction";
 
 const initialState: QuizQuestionState = {
   loading: false,
-  questionTxt: '',
+  questionTxt: "",
   questionTypeId: undefined,
   questionId: undefined,
   errors: {},
@@ -32,7 +33,10 @@ const quizQuestionSlice = createSlice<QuizQuestionState, any>({
       state.success = true;
       state.questionId = payload.questionId;
     },
-    [createQuizQuestion.rejected as any]: (state: QuizQuestionState, { payload }: any) => {
+    [createQuizQuestion.rejected as any]: (
+      state: QuizQuestionState,
+      { payload }: any
+    ) => {
       state.loading = false;
       state.errors = payload;
     },
@@ -45,13 +49,16 @@ const quizQuestionSlice = createSlice<QuizQuestionState, any>({
     [getQuizQuestion.fulfilled as any]: (
       state: QuizQuestionState,
       { payload }: PayloadAction<QuizQuestionDetail>
-    ) => { 
+    ) => {
       state.loading = false;
       state.success = true;
       state.questionTxt = payload.questionTxt;
       state.questionTypeId = payload.questionTypeId;
     },
-    [getQuizQuestion.rejected as any]: (state: QuizQuestionState, { payload }: any) => {
+    [getQuizQuestion.rejected as any]: (
+      state: QuizQuestionState,
+      { payload }: any
+    ) => {
       state.loading = false;
       state.errors = payload;
     },
