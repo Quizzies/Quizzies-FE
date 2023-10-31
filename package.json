@@ -46,5 +46,10 @@
   },
   "devDependencies": {
     "sass": "^1.69.4"
-  }
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "server": "json-server --watch mock-server/data.json --middlewares mock-server/student-midleware-1.js --port 8000",
+    "dev": "concurrently \"npm run start\" \"npm run server\""
+  }  
 }

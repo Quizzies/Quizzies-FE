@@ -1,3 +1,3 @@
 {
-  "middlewares": ["middleware-2.js", "middleware-1.js"]
+  "middlewares": ["mock-server/student-midleware-1.js", "middleware-2.js", "middleware-1.js"]
 }

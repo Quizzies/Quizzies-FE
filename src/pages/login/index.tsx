@@ -28,10 +28,19 @@ const Login = () => {
 
   const navigate = useNavigate();
 
+  const { userInfo } = useSelector((state: RootState) => state.auth);
+  const userType = userInfo?.userType;  
+
   useEffect(() => {
-    // redirect authenticated user to dashboard
-    if (success) navigate("/");
-  }, [success]);
+    if (success) {
+      if (userType?.toLowerCase() === 's') {
+        navigate("/student-dashboard");
+      } else {
+        navigate("/");
+      }
+    }
+  }, [success, userType]);
+  
 
   function onChange(event: ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target;
