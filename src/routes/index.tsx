@@ -18,7 +18,7 @@ const router = createBrowserRouter(
         <Route path="/course/:id" element={<CourseQuizzes />} />
         <Route path="/course/:courseId/create-quiz" element={<CreateQuiz />} />
         <Route path="/student-dashboard" element={<StudentDashboard />} />
-        <Route path="/student-quiz-selection" element={<StudQuizSelect />} />
+        <Route path="/student-quiz-selection/:courseID" element={<StudQuizSelect />} />
       </Route>
 
       <Route path="/login" element={<Login />} />

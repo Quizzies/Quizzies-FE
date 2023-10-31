@@ -22,7 +22,35 @@ const StudentDashboard = () => {
 
 	if (isFetching) return <Spinner type="spinner" />;
 
-	function goToCourse(courseId: number) {
+
+
+	function handleItemClick(courseId: number) {
+		navigate(`/student-quiz-selection/${courseId}`);
+	}
+	return (
+		<>
+		  <SectionContainer>
+			<p className="header-title">Courses</p>
+			<hr className="fit" />
+		  </SectionContainer>
+		  <SectionContainer additionalStyles="pt-0">
+			<p className="p-primary">Enrolled courses</p>
+			{userInfo?.courses &&
+			  userInfo.courses.map((course) => (
+				<p
+				  onClick={() => handleItemClick(course.courseId)}
+				  className="clickable"
+				  key={course.courseId}
+				>
+				  CS {course.courseId} - {course.courseName}
+				</p>
+			  ))}
+		  </SectionContainer>
+		</>
+	  );
+
+
+	/*function goToCourse(courseId: number) {
 		navigate(`/course/${courseId}`);
 	}
 
@@ -46,7 +74,6 @@ const StudentDashboard = () => {
 					))}
 			</SectionContainer>
 		</>
-	);
-};
+	);*/};
 
 export default StudentDashboard;
