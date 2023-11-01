@@ -5,6 +5,8 @@ import {
 } from "react-router-dom";
 import { ProtectedRoute } from "../components";
 import {
+  CreateQuiz,
+  StudentDashboard,
   AddChoices,
   AddQuestion,
   CourseQuizzes,
@@ -14,13 +16,13 @@ import {
   QuizResults,
   QuizSummary,
 } from "../pages";
-import { CreateQuiz } from "../pages/quiz/create-quiz";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route element={<ProtectedRoute />}>
         <Route path="/" element={<DashBoard />} />
+        <Route path="/student-dashboard" element={<StudentDashboard />} />
         <Route path="/course/:id" element={<CourseQuizzes />} />
         <Route path="/course/:courseId/create-quiz" element={<CreateQuiz />} />
         <Route path="/quiz/:quizId/results" element={<QuizResults />} />

@@ -1,5 +1,6 @@
 export { default as Login } from './login';
 export { default as DashBoard } from './dashboard';
+export { default as StudentDashboard} from './student-dashboard'
 export { default as CourseQuizzes } from './quiz/course-quizzes';
 export { default as QuizResults } from './quiz/quiz-results';
 export { default as CreateQuiz } from './quiz/create-quiz';
