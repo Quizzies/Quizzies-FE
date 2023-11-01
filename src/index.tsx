@@ -1,10 +1,9 @@
 import ReactDOM from "react-dom/client";
+import { Provider } from "react-redux";
 import { RouterProvider } from "react-router-dom";
-import { Footer } from "./components/embedded-layout/footer";
 import "./assets/scss/styles.scss";
 import reportWebVitals from "./reportWebVitals";
 import router from "./routes";
-import { Provider } from "react-redux";
 import store from "./store";
 
 const root = ReactDOM.createRoot(

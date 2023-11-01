@@ -3,7 +3,7 @@ import "./radio.module.scss";
 
 interface IRadioButton {
   inputs?: any[];
-  onCheckChange?: changeHandler<HTMLInputElement>;
+  onCheckChange?: any;
 }
 
 export const RadioButtons: React.FC<IRadioButton> = (props) => {
@@ -12,16 +12,16 @@ export const RadioButtons: React.FC<IRadioButton> = (props) => {
       {props.inputs &&
         props.inputs.map((input, i) => {
           return (
-            <div className="radio-group">
+            <div className="radio-group mt-0.5" key={input.name}>
               <input
                 checked={input.checked}
-                onChange={props.onCheckChange}
+                onChange={() => props.onCheckChange(input.name)}
                 type="radio"
                 name={input.name}
                 id={i.toString()}
               />
-              <span>{input.label}</span>
-            </div>
+              <span>&nbsp;{input.label}</span>
+            </div> 
           );
         })}
     </div>

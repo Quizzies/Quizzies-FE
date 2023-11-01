@@ -1,21 +1,26 @@
 import { changeHandler } from "../../../../ts/types/app-types";
-import "./checkbox.module.scss";
+import classes from "./checkbox.module.scss";
 
-interface ISwitch {
+interface ICheckBox {
   input?: any;
   onCheckChange?: changeHandler<HTMLInputElement>;
+  label: string
 }
 
-export const CheckBox: React.FC<ISwitch> = (props: ISwitch) => {
+export const CheckBox: React.FC<ICheckBox> = (props: ICheckBox) => {
   return (
-    <label id="checkBox">
-      <input
-        type="checkbox"
-        onChange={props.onCheckChange}
-        defaultChecked={props.input.checked}
-      />
-      <span className="checkmark"></span>
-    </label>
+    <>
+      <label id={classes.checkBox}>
+        <input
+          type="checkbox"
+          onChange={props.onCheckChange}
+          defaultChecked={props.input.checked}
+        />
+        <span className={classes.checkmark}></span>
+      </label>
+      <label style={{ fontSize: 14 }}>{props.label}</label>
+      <br></br>
+    </>
   );
 };
 
