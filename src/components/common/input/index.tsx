@@ -2,13 +2,12 @@ import { IntersectBaseProps } from "../../../ts/types/input-types";
 import classes from "./input.module.scss";
 import CheckBox from "./checkbox";
 import RadioButtons from "./radio";
-import Select from "./select";
 
 export const Input: React.FC<IntersectBaseProps> = (props) => {
   let inputElement = null;
-  let inputClasses = [classes.inputElement];
+  let inputClasses = [classes.inputElement, props.inputAdditionalStyles];
 
-  if (props.errors) {
+  if (props.errors && props.errors.length) {
     inputClasses = inputClasses.concat(classes.errorField);
   }
 
@@ -35,9 +34,6 @@ export const Input: React.FC<IntersectBaseProps> = (props) => {
         />
       );
       break;
-    case "select":
-      inputElement = <Select value={props.value} items={props.options} />;
-      break;
     case "radio":
       inputElement = (
         <RadioButtons inputs={props.options} onCheckChange={props.changed} />
@@ -45,7 +41,7 @@ export const Input: React.FC<IntersectBaseProps> = (props) => {
       break;
     case "checkbox":
       inputElement = (
-        <CheckBox input={props.option} onCheckChange={props.changed} />
+        <CheckBox input={props.option} onCheckChange={props.changed} label={props.label!} />
       );
       break;
     default:
@@ -53,6 +49,7 @@ export const Input: React.FC<IntersectBaseProps> = (props) => {
         <input
           className={inputClasses.join(" ")}
           {...props.elementConfig}
+          name={props.name}
           value={props.value}
           onChange={props.changed}
         />
@@ -61,13 +58,13 @@ export const Input: React.FC<IntersectBaseProps> = (props) => {
 
   return (
     <div className={`${classes.formControl} ${props.additionalStyles}`}>
-      {props.label ? (
+      {props.label && props.elementType !== 'checkbox' ? (
         <label className={classes.label}>{props.label}</label>
       ) : null}
       {inputElement}
       {props.errors &&
         props.errors.map((err) => (
-          <p className={classes.errorMessage}>* {err}</p>
+          <p key={err} className={classes.errorMessage}>* {err}</p>
         ))}
     </div>
   );

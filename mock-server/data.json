@@ -12,12 +12,18 @@
     "email": "dominicsc2hs@gmail.com",
     "userType": "T",
     "courses": [
-      { "courseId": 1980, "courseName": "Data structures and algorithms" },
+      {
+        "courseId": 1980,
+        "courseName": "Data structures and algorithms"
+      },
       {
         "courseId": 2023,
         "courseName": "Advanced topics in Software Engineering"
       },
-      { "courseId": 9098, "courseName": "Machine learning" }
+      {
+        "courseId": 9098,
+        "courseName": "Machine learning"
+      }
     ]
   },
   "courses": [
@@ -86,6 +92,81 @@
           "dueDate": "09/03/2023"
         }
       ]
+    }
+  ],
+  "quizzes": [
+    {
+      "loading": false,
+      "dueDate": "08/03/2023",
+      "quizDescription": "Quiz for lectures 1 and 2",
+      "quizName": "Quiz 1",
+      "timeLimit": "60",
+      "courseName": "cs 1980 - Data structures and algorithms",
+      "isPosted": true,
+      "quizId": 29,
+      "questions": [
+        {
+          "questionId": 1,
+          "questionTypeId": 3,
+          "questionTxt": "What is the time complexity of merge sort?",
+          "answers": [
+            {
+              "answerId": 1,
+              "answerValue": "b ^ 2",
+              "isCorrect": true
+            },
+            {
+              "answerId": 2,
+              "answerValue": "log n",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "questionId": 2,
+          "questionTypeId": 2,
+          "questionTxt": "What is bogo sort?",
+          "answers": [
+            {
+              "answerId": 3,
+              "answerValue": "Worst algorithm ever",
+              "isCorrect": false
+            },
+            {
+              "answerId": 4,
+              "answerValue": "Best algorithm ever",
+              "isCorrect": true
+            }
+          ]
+        }
+      ],
+      "errors": {},
+      "success": true,
+      "updated": false
+    }
+  ],
+  "quiz-questions": [
+    {
+      "questionId": 1,
+      "quizID": 29,
+      "questionTypeID": 1,
+      "questionTxt": "What is the time complexity of merge sort?",
+      "courseName": "cs 1980 - Data structures and algorithms",
+      "quizName": "Quiz 1"
+    }
+  ],
+  "question-types": [
+    {
+      "questionTypeId": 1,
+      "name": "short_answer"
+    },
+    {
+      "questionTypeId": 2,
+      "name": "multiple_choice"
+    },
+    {
+      "questionTypeId": 3,
+      "name": "single_choice"
     }
   ]
 }

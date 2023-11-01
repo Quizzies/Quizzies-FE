@@ -32,7 +32,7 @@ export interface ModalMenuOptions {
 
 export interface AddedStyles {
   additionalStyles?: string;
-  id?: string;
+  id?: string | number;
 }
 
 export interface PassedValues {

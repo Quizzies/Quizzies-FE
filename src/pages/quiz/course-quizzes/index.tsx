@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { OutlineButton, SectionContainer } from "../../components";
-import Spinner from "../../components/common/spinner";
-import { RootState } from "../../store";
-import { courseQuizzes } from "../../store/features/courses/detail/courseDetailActions";
+import { OutlineButton, SectionContainer } from "../../../components";
+import Spinner from "../../../components/common/spinner";
+import { RootState } from "../../../store";
+import { courseQuizzes } from "../../../store/features/courses/detail/courseDetailActions";
 
 export const CourseQuizzes = () => {
   // https://stackoverflow.com/questions/53835816/decode-jwt-token-react
@@ -26,18 +26,21 @@ export const CourseQuizzes = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(userInfo)
     if (id) dispatch(courseQuizzes(+id) as any);
   }, [id]);
 
   if (loading) return <Spinner type="spinner" />;
 
   function createQuiz() {
-    navigate(`/course/${id}/create-quiz`)
+    navigate(`/course/${id}/create-quiz`);
   }
 
   function goBack() {
-    navigate(-1);
+    navigate("/");
+  }
+
+  function goToQuizResults(quizId: number) {
+    navigate(`/quiz/${quizId}/results`);
   }
 
   return (
@@ -46,11 +49,8 @@ export const CourseQuizzes = () => {
         <p>{"cs " + courseId + " - " + courseName}</p>
       </SectionContainer>
       <SectionContainer additionalStyles="pt-0 mb-2">
-        <p className="header-title">Courses</p>
+        <p className="header-title">Quizzes</p>
         <hr className="fit" />
-      </SectionContainer>
-      <SectionContainer additionalStyles="py-0">
-        <p className="p-primary">Quizzes</p>
       </SectionContainer>
       <SectionContainer additionalStyles="pt-0">
         <p className="p-primary">
@@ -59,21 +59,35 @@ export const CourseQuizzes = () => {
         {quizzes.length &&
           quizzes.map((quiz) => (
             <div key={quiz.quizName} className="mb-1">
-              <p
-                // onClick={() => goToCourse(course.courseId)}
-                className="clickable my-0"
-              >
-                {quiz.quizName}
-              </p>
-              <p className="light-grey my-0">{quiz.dueDate}</p>
+              {userInfo?.userType === "T" && (
+                <>
+                  <p
+                    onClick={() => goToQuizResults(quiz.quizId)}
+                    className="clickable my-0"
+                  >
+                    {quiz.quizName}
+                  </p>
+                  <span className="light-grey my-0 mr-1">{quiz.dueDate}</span>
+
+                  <span className="light-grey my-0">
+                    {quiz.isPosted ? "(posted)" : "(incomplete)"}
+                  </span>
+                </>
+              )}
             </div>
           ))}
 
         {userInfo?.userType === "T" ? (
-          <p className="p-primary" onClick={createQuiz}>Create a quiz</p>
+          <p className="p-primary clickable" onClick={createQuiz}>
+            Create a quiz
+          </p>
         ) : null}
       </SectionContainer>
-      <OutlineButton additionalStyles="stack-end" value="Back" onClick={goBack}></OutlineButton>
+      <OutlineButton
+        additionalStyles="stack-end"
+        value="Back"
+        onClick={goBack}
+      ></OutlineButton>
     </>
   );
 };
