@@ -5,6 +5,7 @@ import {
 } from "react-router-dom";
 import { ProtectedRoute } from "../components";
 import StudQuizSelect from "../pages/student-quiz-selection";
+import StudentTakeQuiz from "../pages/student-takeQuiz";
 import {
   CreateQuiz,
   StudentDashboard,
@@ -31,11 +32,12 @@ const router = createBrowserRouter(
         <Route path="/quiz/:quizId/add-question" element={<AddQuestion />} />
         <Route path="/question/:questionId" element={<AddChoices />} />
         <Route path="/quiz/:quizId/summary" element={<QuizSummary />} />
+        <Route path="/student-quiz-selection/:courseID" element={<StudQuizSelect />} />
+        <Route path="/student-takeQuiz/:quizNumber" element={<StudentTakeQuiz />} />
         <Route
           path="/question/:questionId/edit"
           element={<EditAnswerCorrectness />}
         />
-        <Route path="/student-quiz-selection/:courseID" element={<StudQuizSelect />} />
       </Route>
 
       <Route path="/login" element={<Login />} />

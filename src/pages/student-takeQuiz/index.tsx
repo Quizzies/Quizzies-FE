@@ -7,7 +7,8 @@ import { RootState } from '../../store';
 import { setCredentials } from '../../store/features/auth/authSlice';
 import { useGetUserDetailsQuery } from '../../store/services/auth/atuhService';
 
-const takeQuiz = () => {
+const StudentTakeQuiz = () => {
+  let { quizNumber } = useParams<{ quizNumber: string }>();
   return (
     <div>
       Lorem Ipsum
@@ -15,4 +16,4 @@ const takeQuiz = () => {
   );
 };
 
-export default takeQuiz;
+export default StudentTakeQuiz;

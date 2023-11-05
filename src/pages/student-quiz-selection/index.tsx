@@ -7,10 +7,13 @@ import { RootState } from '../../store';
 import { setCredentials } from '../../store/features/auth/authSlice';
 import { useGetUserDetailsQuery } from '../../store/services/auth/atuhService';
 import { courseQuizzes } from "../../store/features/courses/detail/courseDetailActions";
+import { useLocation } from 'react-router-dom';
 
 const StudQuizSelect = () => {
+  const location=useLocation();
+  const stateFromLocation=location.state as {courseName?: string, courseId?: number};
   const {
-    courseDetail: { courseName, courseId, quizzes, loading },
+    courseDetail: { courseName: courseNameRedux, courseId: courseIdRedux, quizzes, loading },
     userInfo,
   } = useSelector((state: RootState) => {
     return {
@@ -18,6 +21,10 @@ const StudQuizSelect = () => {
       userInfo: state.auth.userInfo,
     };
   });
+
+  const courseName = stateFromLocation.courseName ?? courseNameRedux;
+  const courseId = stateFromLocation.courseId ?? courseIdRedux;
+  
 
   let { id } = useParams<{ id: string }>();
   const dispatch = useDispatch();
@@ -31,7 +38,12 @@ const StudQuizSelect = () => {
 
   function goBack() {
     navigate("/student-dashboard");
-  }  
+  } 
+  
+  function QuizSelect(quizNumber: number) {
+    navigate(`/student-takeQuiz/${quizNumber}`);
+  }
+
 
   return (
     <>
@@ -43,23 +55,33 @@ const StudQuizSelect = () => {
         <hr className="fit" />
       </SectionContainer>
       <SectionContainer additionalStyles="pt-0">
-        {quizzes.length ? (
-          quizzes.map((quiz) => (
-            <div key={quiz.quizName} className="mb-2">
-              {userInfo?.userType === "S" && (
-                <>
-                  <p className="mb-0.5">{quiz.isPosted ? "Status: Posted" : "Status: Incomplete"}</p>
-                  <p className="p-primary clickable mb-0.5">{quiz.quizName}</p>
-                  <p className="light-grey mb-0.5">{quiz.dueDate}</p>
-                </>
-              )}
-            </div>
-          ))
-        ) : (
-          <p>No quizzes available</p>
-        )}
+        <p className="p-primary">Status: Pending</p>
+        <div className="mb-1">
+          <p 
+            className="my-0 clickable"
+            onClick={() => QuizSelect(1)}
+          >
+            Quiz 1
+          </p>
+          <span className="light-grey my-0">Due Date: November 1, 2023</span>
+        </div>
+        <p className="p-primary">Status: Incomplete</p>
+        <div className="mb-1">
+          <p 
+            className="my-0 clickable"
+            onClick={() => QuizSelect(2)}
+          >
+            Quiz 2
+          </p>
+          <span className="light-grey my-0">Due Date: November 2, 2023</span>
+        </div>
+
       </SectionContainer>
-      <OutlineButton additionalStyles="stack-end" value="Back" onClick={goBack}></OutlineButton>
+      <OutlineButton
+        additionalStyles="stack-end"
+        value="Back"
+        onClick={goBack}
+      ></OutlineButton>
     </>
   );
 };

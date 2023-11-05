@@ -24,9 +24,11 @@ const StudentDashboard = () => {
 
 
 
-	function handleItemClick(courseId: number) {
-		navigate(`/student-quiz-selection/${courseId}`);
-	}
+	function handleItemClick(courseId: number, courseName: string) {
+		navigate(`/student-quiz-selection/${courseId}`, { state: { courseId, courseName } });
+	  }
+	  
+	
 	return (
 		<>
 		  <SectionContainer>
@@ -38,7 +40,7 @@ const StudentDashboard = () => {
 			{userInfo?.courses &&
 			  userInfo.courses.map((course) => (
 				<p
-				  onClick={() => handleItemClick(course.courseId)}
+				  onClick={() => handleItemClick(course.courseId, course.courseName)}
 				  className="clickable"
 				  key={course.courseId}
 				>
