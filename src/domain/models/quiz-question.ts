@@ -6,4 +6,6 @@ export interface QuizQuestion {
   questionTypeId: number | undefined;
   questionTxt: string;
   answers?: QuizAnswer[]
+  courseName?: string;
+  quizName?: string;
 }

@@ -25,7 +25,7 @@ const quizSlice = createSlice<QuizState, any>({
   reducers: {
     updateIsPosted: (state: QuizState, { payload }: PayloadAction<boolean>) => {
       state.isPosted = payload;
-    }
+    },
   },
   extraReducers: {
     // create quiz
@@ -44,6 +44,8 @@ const quizSlice = createSlice<QuizState, any>({
       state.dueDate = payload.dueDate;
       state.quizDescription = payload.quizDescription;
       state.quizId = payload.quizId;
+      state.timeLimit = 0;
+      state.questions = [];
       state.quizName = payload.quizName;
     },
     [createQuiz.rejected as any]: (state: QuizState, { payload }: any) => {
@@ -57,17 +59,19 @@ const quizSlice = createSlice<QuizState, any>({
     },
     [updateQuiz.fulfilled as any]: (
       state: QuizState,
-      { payload }: PayloadAction<QuizDetail>
+      _: PayloadAction<QuizDetail>
     ) => {
-      // state updates trigger a rerender
-      state.courseName = payload.courseName;
-      state.dueDate = payload.dueDate;
-      state.quizDescription = payload.quizDescription;
-      state.quizId = payload.quizId;
-      state.quizName = payload.quizName;
+      state.courseName = "";
+      state.dueDate = "";
+      state.quizDescription = "";
+      state.quizId = undefined;
+      state.quizName = "";
       state.loading = false;
-      state.success = true;
+      state.success = false;
       state.updated = true;
+      state.isPosted = false;
+      state.questions = [];
+      state.errors = {};
     },
     [updateQuiz.rejected as any]: (state: QuizState, { payload }: any) => {
       state.loading = false;
@@ -121,6 +125,6 @@ const quizSlice = createSlice<QuizState, any>({
   },
 });
 
-export const  { updateIsPosted } = quizSlice.actions as any;
+export const { updateIsPosted } = quizSlice.actions as any;
 
 export default quizSlice.reducer;

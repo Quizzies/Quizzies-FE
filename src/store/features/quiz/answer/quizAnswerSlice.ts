@@ -2,15 +2,20 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { QuizQuestionDetail } from "../../../../domain/dtos";
 import { QuizAnswer } from "../../../../domain/models";
 import { QuizAnswerState } from "../../../../ts/types/app-state-types";
-import { createQuizAnswers, getQuizAnswers, updateQuizAnswers } from "./quizAnswerAction";
+import {
+  createQuizAnswers,
+  getQuizAnswers,
+  updateQuizAnswers,
+} from "./quizAnswerAction";
 import { QuestionTypeEnum } from "../../../../ts/enums";
+import { updateQuiz } from "../quizAction";
 
 const initialState: QuizAnswerState = {
   loading: false,
   questionAnswers: [],
   errors: {},
   success: false,
-  submitted: false
+  submitted: false,
 };
 
 const quizAnswerSlice = createSlice<QuizAnswerState, any>({
@@ -52,7 +57,7 @@ const quizAnswerSlice = createSlice<QuizAnswerState, any>({
           } else {
             quizAnswer.isCorrect = false;
           }
-        })
+        });
       }
     },
   },
@@ -118,6 +123,8 @@ const quizAnswerSlice = createSlice<QuizAnswerState, any>({
       state.loading = false;
       state.errors = payload;
     },
+    // submitted quiz
+    [updateQuiz.fulfilled as any]: () => initialState,
   },
 });
 

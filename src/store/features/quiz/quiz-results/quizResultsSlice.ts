@@ -2,6 +2,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { QuizResultDto } from "../../../../domain/dtos";
 import { QuizResultState } from "../../../../ts/types/app-state-types";
 import { getQuizResults } from "./quizResultsAction";
+import { updateQuiz } from "../quizAction";
 
 const initialState: QuizResultState = {
   loading: false,
@@ -42,6 +43,8 @@ const quizResultsSlice = createSlice<QuizResultState, any>({
       state.loading = false;
       state.errors = payload;
     },
+    // submitted quiz
+    [updateQuiz.fulfilled as any]: () => initialState
   },
 });
 

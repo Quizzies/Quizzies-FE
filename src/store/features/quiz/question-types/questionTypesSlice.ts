@@ -2,6 +2,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { QuestionType } from "../../../../domain/models";
 import { QuestionTypeState } from "../../../../ts/types/app-state-types";
 import { getQuestionTypes } from "./questionTypesAction";
+import { updateQuiz } from "../quizAction";
 
 const initialState: QuestionTypeState = {
   loading: false,
@@ -35,6 +36,8 @@ const questionTypesSlice = createSlice<QuestionTypeState, any>({
       state.loading = false;
       state.errors = payload;
     },
+    // submitted quiz
+    [updateQuiz.fulfilled as any]: () => initialState,
   },
 });
 
