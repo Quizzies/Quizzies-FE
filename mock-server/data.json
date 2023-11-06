@@ -32,6 +32,7 @@
       "courseName": "Data structures and algorithms",
       "quizzes": [
         {
+          "quizId": 1,
           "quizName": "Quiz 1",
           "dueDate": "08/03/2023"
         }
@@ -88,6 +89,7 @@
       "courseName": "Machine learning",
       "quizzes": [
         {
+          "quizId": 3,
           "quizName": "Final quiz",
           "dueDate": "09/03/2023"
         }
