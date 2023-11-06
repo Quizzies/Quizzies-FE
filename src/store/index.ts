@@ -1,4 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import authReducer from "./features/auth/authSlice";
 import courseReducer from "./features/courses/coursesSlice";
 import courseDetailReducer from "./features/courses/detail/courseDetailSlice";
@@ -9,18 +9,27 @@ import quizAnswerReducer from "./features/quiz/answer/quizAnswerSlice";
 import questionTypesReducer from "./features/quiz/question-types/questionTypesSlice";
 import { authApi } from "./services/auth/atuhService";
 
+const combinedReducer = combineReducers({
+  auth: authReducer,
+  courseDetail: courseDetailReducer,
+  course: courseReducer,
+  quiz: quizReducer,
+  quizResults: quizResultsReducer,
+  quizQuestion: quizQuestionReducer,
+  quizAnswer: quizAnswerReducer,
+  questionTypes: questionTypesReducer,
+  [authApi.reducerPath]: authApi.reducer,
+});
+
+const rootReducer = (state: any, action: any) => {
+  if (action.type === 'auth/logout') { // reset the state
+    state = undefined;
+  }
+  return combinedReducer(state, action);
+};
+
 const store = configureStore({
-  reducer: {
-    auth: authReducer,
-    courseDetail: courseDetailReducer,
-    course: courseReducer,
-    quiz: quizReducer,
-    quizResults: quizResultsReducer,
-    quizQuestion: quizQuestionReducer,
-    quizAnswer: quizAnswerReducer,
-    questionTypes: questionTypesReducer,
-    [authApi.reducerPath]: authApi.reducer,
-  },
+  reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(authApi.middleware),
 });

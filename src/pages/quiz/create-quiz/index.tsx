@@ -25,17 +25,8 @@ const quizSchema = object({
 
 export const CreateQuiz = () => {
   const {
-    quiz: {
-      loading,
-      dueDate,
-      quizDescription,
-      timeLimit,
-      quizName,
-      quizId,
-    },
-    courseDetail: {
-      courseName
-    }
+    quiz: { loading, dueDate, quizDescription, timeLimit, quizName, quizId },
+    courseDetail: { courseName },
   } = useSelector((state: RootState) => {
     return {
       quiz: state.quiz,
