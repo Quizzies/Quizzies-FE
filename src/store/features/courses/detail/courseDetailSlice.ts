@@ -1,6 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { CourseDetailState } from "../../../../ts/types/app-state-types";
 import { courseQuizzes } from "./courseDetailActions";
+import { updateQuiz } from "../../quiz/quizAction";
 
 const initialState: CourseDetailState = {
   loading: false,
@@ -38,6 +39,8 @@ const courseDetailSlice = createSlice<CourseDetailState, any>({
       state.loading = false;
       state.errors = payload;
     },
+    // submitted quiz
+    [updateQuiz.fulfilled as any]: () => initialState
   },
 });
 

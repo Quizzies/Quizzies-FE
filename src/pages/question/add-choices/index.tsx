@@ -11,7 +11,10 @@ import {
 import Spinner from "../../../components/common/spinner";
 import { RootState } from "../../../store";
 import { getQuizQuestion } from "../../../store/features/quiz/question/quizQuestionAction";
-import { addAnswerChoice, removeAnswerChoice } from "../../../store/features/quiz/answer/quizAnswerSlice";
+import {
+  addAnswerChoice,
+  removeAnswerChoice,
+} from "../../../store/features/quiz/answer/quizAnswerSlice";
 import { QuestionTypeEnum } from "../../../ts/enums";
 import { createQuizAnswers } from "../../../store/features/quiz/answer/quizAnswerAction";
 
@@ -20,15 +23,15 @@ export const AddChoices = () => {
     quizQuestion: {
       questionTxt,
       questionTypeId,
-      loading
+      loading,
+      courseName,
+      quizName,
     },
     quizAnswer: { questionAnswers, success },
-    quiz: { courseName, quizName }
   } = useSelector((state: RootState) => {
     return {
       quizQuestion: state.quizQuestion,
       quizAnswer: state.quizAnswer,
-      quiz: state.quiz,
     };
   });
 
@@ -54,10 +57,12 @@ export const AddChoices = () => {
   }
 
   function AddQuizAnswers() {
-    dispatch(createQuizAnswers({
-      form: questionAnswers,
-      questionId: +questionId!
-    }) as any)
+    dispatch(
+      createQuizAnswers({
+        form: questionAnswers,
+        questionId: +questionId!,
+      }) as any
+    );
   }
 
   const addAnswer = (answerValue: string) => {
@@ -70,10 +75,8 @@ export const AddChoices = () => {
   };
 
   const deleteAnswer = (idx: number) => {
-    dispatch(
-      removeAnswerChoice(idx) as any
-    );
-  }
+    dispatch(removeAnswerChoice(idx) as any);
+  };
 
   const displayUI = () => {
     if (questionTypeId !== QuestionTypeEnum.SHORT_ANSWER) {
@@ -87,7 +90,12 @@ export const AddChoices = () => {
                   <p style={{ display: "inline", marginRight: 10 }}>
                     {answer.answerValue}
                   </p>
-                  <span style={{ cursor: 'pointer' }} onClick={() => deleteAnswer(idx)}>&times;</span>
+                  <span
+                    style={{ cursor: "pointer" }}
+                    onClick={() => deleteAnswer(idx)}
+                  >
+                    &times;
+                  </span>
                 </div>
               );
             })}

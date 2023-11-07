@@ -14,7 +14,7 @@ import Spinner from "../../../components/common/spinner";
 import { QuizInput } from "../../../domain/dtos";
 import { RootState } from "../../../store";
 import { courseQuizzes } from "../../../store/features/courses/detail/courseDetailActions";
-import { createQuiz, updateQuiz } from "../../../store/features/quiz/quizAction";
+import { createQuiz } from "../../../store/features/quiz/quizAction";
 
 const quizSchema = object({
   quizName: string().required(),
@@ -25,14 +25,14 @@ const quizSchema = object({
 
 export const CreateQuiz = () => {
   const {
-    courseName,
-    loading,
-    dueDate,
-    quizDescription,
-    timeLimit,
-    quizName,
-    quizId,
-  } = useSelector((state: RootState) => state.quiz);
+    quiz: { loading, dueDate, quizDescription, timeLimit, quizName, quizId },
+    courseDetail: { courseName },
+  } = useSelector((state: RootState) => {
+    return {
+      quiz: state.quiz,
+      courseDetail: state.courseDetail,
+    };
+  });
 
   let { courseId } = useParams();
 
@@ -55,9 +55,7 @@ export const CreateQuiz = () => {
     navigate(`/course/${courseId}`);
   }
 
-  const handleChange = (field: string) => (evt: any) => {
-
-  };
+  const handleChange = (field: string) => (evt: any) => {};
 
   return (
     <SectionContainer>
@@ -73,6 +71,7 @@ export const CreateQuiz = () => {
         }}
         validationSchema={quizSchema}
         onSubmit={(values) => {
+          values.courseId = +courseId!;
           dispatch(createQuiz(values) as any);
         }}
       >

@@ -26,7 +26,7 @@ export const courseQuizzes = createAsyncThunk<any, number>(
       }
 
       const data = (await response.json()) as CourseOverview;
-
+      
       return data;
     } catch (error: any) {
       const errorResponse = setErroMapping(error);

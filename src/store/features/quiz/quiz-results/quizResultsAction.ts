@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { QuizDetail } from "../../../../domain/dtos";
+import { QuizResultDto } from "../../../../domain/dtos";
 import { backendURL } from "../../../../ts/constants";
 import { getToken } from "../../../../ts/utils/auth";
 import { setErroMapping } from "../../../../ts/utils/error-utils";
@@ -21,7 +21,7 @@ export const getQuizResults = createAsyncThunk<any, number>(
         throw new Error(error);
       }
 
-      const data = (await response.json()) as QuizDetail;
+      const data = (await response.json()) as QuizResultDto;
 
       return data;
     } catch (error: any) {

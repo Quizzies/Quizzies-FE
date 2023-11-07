@@ -62,9 +62,9 @@ export const updateQuiz = createAsyncThunk<any, { quiz: QuizInput, quizId: numbe
 
 export const getQuiz = createAsyncThunk<any, number>(
   "quiz/get",
-  async (courseId, { rejectWithValue }) => {
+  async (quizId, { rejectWithValue }) => {
     try {
-      const response = await fetch(`${backendURL}/quizzes/${courseId}`, {
+      const response = await fetch(`${backendURL}/quizzes/${quizId}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

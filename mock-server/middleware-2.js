@@ -110,7 +110,8 @@ module.exports = function (req, res, next) {
 
     });
   }
-  if (req.url === "/quizzes" && (req.method === "POST" || req.method === "PUT")) {
+  if (req.url.includes("/quizzes") && (req.method === "POST" || req.method === "PUT")) {
+    console.log(req.body)
     // quiz update / post
     return res.status(201).json({
       quizId: 29,

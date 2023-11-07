@@ -33,11 +33,7 @@ const Login = () => {
 
   useEffect(() => {
     if (success) {
-      if (userType?.toLowerCase() === 's') {
-        navigate("/student-dashboard");
-      } else {
-        navigate("/");
-      }
+      navigate("/");
     }
   }, [success, userType]);
   
