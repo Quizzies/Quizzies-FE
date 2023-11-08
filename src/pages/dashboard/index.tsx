@@ -24,8 +24,13 @@ const Dashboard = () => {
 
   if (isFetching) return <Spinner type="spinner" />;
 
-  function goToCourse(courseId: number) {
-    navigate(`/course/${courseId}`);
+  function goToCourse(courseId: number, courseName: string) {
+    navigate(
+      userInfo?.userType === "T" 
+        ? `/course/${courseId}` 
+        : `/student-quiz-selection/${courseId}`, 
+      { state: { courseId, courseName } }
+    );
   }
 
   return (
@@ -43,7 +48,7 @@ const Dashboard = () => {
         {userInfo?.courses &&
           userInfo.courses.map((course) => (
             <p
-              onClick={() => goToCourse(course.courseId)}
+              onClick={() => goToCourse(course.courseId, course.courseName)}
               className="clickable"
               key={course.courseId}
             >

@@ -25,6 +25,7 @@ export const CourseQuizzes = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+
   useEffect(() => {
     if (id) dispatch(courseQuizzes(+id) as any);
   }, [id]);
@@ -42,54 +43,98 @@ export const CourseQuizzes = () => {
   function goToQuizResults(quizId: number) {
     navigate(`/quiz/${quizId}/results`);
   }
-
-  return (
-    <>
-      <SectionContainer additionalStyles="pb-0.5">
-        <p>{"cs " + courseId + " - " + courseName}</p>
-      </SectionContainer>
-      <SectionContainer additionalStyles="pt-0 mb-2">
-        <p className="header-title">Quizzes</p>
-        <hr className="fit" />
-      </SectionContainer>
-      <SectionContainer additionalStyles="pt-0">
-        <p className="p-primary">
-          {userInfo?.userType === "T" ? "Your quizzes" : "Pending"}
-        </p>
-        {quizzes.length &&
-          quizzes.map((quiz) => (
-            <div key={quiz.quizName} className="mb-1">
-              {userInfo?.userType === "T" && (
-                <>
-                  <p
-                    onClick={() => goToQuizResults(quiz.quizId)}
-                    className="clickable my-0"
-                  >
-                    {quiz.quizName}
-                  </p>
-                  <span className="light-grey my-0 mr-1">{quiz.dueDate}</span>
-
-                  <span className="light-grey my-0">
-                    {quiz.isPosted ? "(posted)" : "(incomplete)"}
-                  </span>
-                </>
-              )}
-            </div>
-          ))}
-
-        {userInfo?.userType === "T" ? (
-          <p className="p-primary clickable" onClick={createQuiz}>
-            Create a quiz
+  if (userInfo?.userType === "T") {
+    return (
+      <>
+        <SectionContainer additionalStyles="pb-0.5">
+          <p>{"CS " + courseId + " - " + courseName}</p>
+        </SectionContainer>
+        <SectionContainer additionalStyles="pt-0 mb-2">
+          <p className="header-title">Quizzes</p>
+          <hr className="fit" />
+        </SectionContainer>
+        <SectionContainer additionalStyles="pt-0">
+          <p className="p-primary">
+            {userInfo?.userType === "T" ? "Your quizzes" : "Pending"}
           </p>
-        ) : null}
-      </SectionContainer>
-      <OutlineButton
-        additionalStyles="stack-end"
-        value="Back"
-        onClick={goBack}
-      ></OutlineButton>
-    </>
-  );
+          {quizzes.length &&
+            quizzes.map((quiz) => (
+              <div key={quiz.quizName} className="mb-1">
+                {userInfo?.userType === "T" && (
+                  <>
+                    <p
+                      onClick={() => goToQuizResults(quiz.quizId)}
+                      className="clickable my-0"
+                    >
+                      {quiz.quizName}
+                    </p>
+                    <span className="light-grey my-0 mr-1">{quiz.dueDate}</span>
+
+                    <span className="light-grey my-0">
+                      {quiz.isPosted ? "(posted)" : "(incomplete)"}
+                    </span>
+                  </>
+                )}
+              </div>
+            ))}
+
+          {userInfo?.userType === "T" ? (
+            <p className="p-primary clickable" onClick={createQuiz}>
+              Create a quiz
+            </p>
+          ) : null}
+        </SectionContainer>
+        <OutlineButton
+          additionalStyles="stack-end"
+          value="Back"
+          onClick={goBack}
+        ></OutlineButton>
+      </>
+    );
+  } else {
+    return (
+      <>
+        <SectionContainer additionalStyles="pb-0.5">
+          <p>{"CS " + courseId + " - " + courseName}</p>
+        </SectionContainer>
+        <SectionContainer additionalStyles="pt-0 mb-2">
+          <p className="header-title">Quizzes</p>
+          <hr className="fit" />
+        </SectionContainer>
+        <SectionContainer additionalStyles="pt-0">
+          <p className="p-primary">
+          {"Pending"}
+          </p>
+          {quizzes.length &&
+            quizzes.map((quiz) => (
+              <div key={quiz.quizName} className="mb-1">
+                {userInfo?.userType === "T" && (
+                  <>
+                    <p
+                      onClick={() => goToQuizResults(quiz.quizId)}
+                      className="clickable my-0"
+                    >
+                      {quiz.quizName}
+                    </p>
+                    <span className="light-grey my-0 mr-1">{quiz.dueDate}</span>
+
+                    <span className="light-grey my-0">
+                      {quiz.isPassedDeadline ? "(Open)" : "(Pending)"}
+                    </span>
+                  </>
+                )}
+              </div>
+            ))}
+        </SectionContainer>
+        <OutlineButton
+          additionalStyles="stack-end"
+          value="Back"
+          onClick={goBack}
+        ></OutlineButton>
+      </>
+    );
+
+  }
 };
 
 export default CourseQuizzes;
