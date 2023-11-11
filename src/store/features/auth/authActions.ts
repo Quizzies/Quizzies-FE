@@ -7,7 +7,7 @@ export const userLogin = createAsyncThunk<any, RegisterInput>(
   "auth/login",
   async (form, { rejectWithValue }) => {
     try {
-      const response = await fetch(`${backendURL}/login`, {
+      const response = await fetch(`${backendURL}/user/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
