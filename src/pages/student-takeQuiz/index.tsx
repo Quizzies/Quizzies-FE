@@ -32,7 +32,7 @@ const StudentTakeQuiz = () => {
 
   useEffect(() => {
     if (timer === 0) {
-      console.log('Timer ending log');
+      console.log('Timer ending log'); //Delete after fixes
       return;
     }
 
@@ -50,7 +50,7 @@ const StudentTakeQuiz = () => {
     console.log(values);
   };
 
-  const currentQuestion = questions && questions.length > 0 ? questions[0].questionTxt : 'Loading question...';
+  const currentQuestion = questions && questions.length > 0 ? questions[0].questionTxt : 'Loading question...'; // Unnecessary?
 
   return (
     <SectionContainer>
