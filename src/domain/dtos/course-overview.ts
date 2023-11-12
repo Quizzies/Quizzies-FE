@@ -3,7 +3,6 @@ export interface QuizOverview {
   quizName: string;
   dueDate: string;
   isPosted: boolean;
-  isPassedDeadline: boolean
 }
 
 export interface CourseOverview {

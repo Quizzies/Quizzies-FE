@@ -30,7 +30,7 @@ const router = createBrowserRouter(
         <Route path="/quiz/:quizId/add-question" element={<AddQuestion />} />
         <Route path="/question/:questionId" element={<AddChoices />} />
         <Route path="/quiz/:quizId/summary" element={<QuizSummary />} />
-        <Route path="/student-quiz-selection/:courseID" element={<StudQuizSelect />} />
+        <Route path="/student-quiz-selection/:id" element={<StudQuizSelect />} />
         <Route path="/student-takeQuiz/:quizNumber" element={<StudentTakeQuiz />} />
         <Route
           path="/question/:questionId/edit"

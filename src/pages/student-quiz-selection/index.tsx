@@ -1,87 +1,72 @@
-import { useEffect, useState } from "react";
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { SectionContainer, OutlineButton } from '../../components';
 import Spinner from '../../components/common/spinner';
 import { RootState } from '../../store';
-import { setCredentials } from '../../store/features/auth/authSlice';
-import { useGetUserDetailsQuery } from '../../store/services/auth/atuhService';
-import { courseQuizzes } from "../../store/features/courses/detail/courseDetailActions";
-import { useLocation } from 'react-router-dom';
+import { courseQuizzes } from '../../store/features/courses/detail/courseDetailActions';
+import { QuizOverview } from '../../domain/dtos';
 
-const StudQuizSelect = () => {
-  const location=useLocation();
-  const stateFromLocation=location.state as {courseName?: string, courseId?: number};
-  const {
-    courseDetail: { courseName: courseNameRedux, courseId: courseIdRedux, quizzes, loading },
-    userInfo,
-  } = useSelector((state: RootState) => {
-    return {
-      courseDetail: state.courseDetail,
-      userInfo: state.auth.userInfo,
-    };
-  });
-
-  const courseName = stateFromLocation.courseName ?? courseNameRedux;
-  const courseId = stateFromLocation.courseId ?? courseIdRedux;
-  
-
-  let { id } = useParams<{ id: string }>();
+const StudQuizSelect: React.FC = () => {
+  const { loading, courseName, courseId, quizzes } = useSelector(
+    (state: RootState) => state.courseDetail
+  );
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  let { id } = useParams<{ id: string }>();
 
   useEffect(() => {
-    if (id) dispatch(courseQuizzes(+id) as any);
-  }, [id]);
+    if (id) {
+      dispatch(courseQuizzes(Number(id)) as any);
+    }
+  }, [id, dispatch]);
+
+  useEffect(() => {
+    console.log("Quizzes:", quizzes); //remove after logging
+  }, [quizzes]);
 
   if (loading) return <Spinner type="spinner" />;
 
-  function goBack() {
-    navigate("/student-dashboard");
-  } 
-  
-  function QuizSelect(quizNumber: number) {
-    navigate(`/student-takeQuiz/${quizNumber}`);
-  }
+  const getStatus = (quiz: QuizOverview) => {
+    const now = new Date();
+    const dueDate = new Date(quiz.dueDate);
+    return now > dueDate ? 'Past Due' : 'Pending';
+  };
 
+  const goBack = () => navigate('/');
 
   return (
     <>
       <SectionContainer additionalStyles="pb-0.5">
-        <p>{"CS " + courseId + " - " + courseName}</p>
+        <p>{`CS ${courseId} - ${courseName}`}</p>
       </SectionContainer>
       <SectionContainer additionalStyles="pt-0 mb-2">
         <p className="header-title">Quizzes</p>
         <hr className="fit" />
       </SectionContainer>
       <SectionContainer additionalStyles="pt-0">
-        <p className="p-primary">Status: Pending</p>
-        <div className="mb-1">
-          <p 
-            className="my-0 clickable"
-            onClick={() => QuizSelect(1)}
-          >
-            Quiz 1
-          </p>
-          <span className="light-grey my-0">Due Date: November 1, 2023</span>
-        </div>
-        <p className="p-primary">Status: Incomplete</p>
-        <div className="mb-1">
-          <p 
-            className="my-0 clickable"
-            onClick={() => QuizSelect(2)}
-          >
-            Quiz 2
-          </p>
-          <span className="light-grey my-0">Due Date: November 2, 2023</span>
-        </div>
-
+        {quizzes.map((quiz) => (
+          <React.Fragment key={quiz.quizId}>
+            <p className="p-primary">Status: {getStatus(quiz)}</p>
+            <div className="mb-1">
+              <p
+                className="my-0 clickable"
+                onClick={() => navigate(`/student-takeQuiz/${quiz.quizId}`)}
+              >
+                {quiz.quizName}
+              </p>
+              <span className="light-grey my-0">
+                Due Date: {new Intl.DateTimeFormat('en-US').format(new Date(quiz.dueDate))}
+              </span>
+            </div>
+          </React.Fragment>
+        ))}
       </SectionContainer>
       <OutlineButton
         additionalStyles="stack-end"
         value="Back"
         onClick={goBack}
-      ></OutlineButton>
+      />
     </>
   );
 };

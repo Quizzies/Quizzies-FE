@@ -119,7 +119,6 @@ export const CourseQuizzes = () => {
                     <span className="light-grey my-0 mr-1">{quiz.dueDate}</span>
 
                     <span className="light-grey my-0">
-                      {quiz.isPassedDeadline ? "(Open)" : "(Pending)"}
                     </span>
                   </>
                 )}
