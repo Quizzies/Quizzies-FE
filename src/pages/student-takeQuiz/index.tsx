@@ -13,6 +13,7 @@ const quizQuestionSchema = object({
 });
 
 const StudentTakeQuiz = () => {
+  console.log("StudentTakeQuiz is launched");
   const { quizNumber } = useParams<{ quizNumber?: string }>();
   const quizId = quizNumber ? parseInt(quizNumber) : null;
   const dispatch = useDispatch();
@@ -21,13 +22,20 @@ const StudentTakeQuiz = () => {
   const [timer, setTimer] = useState(timeLimit);
 
   useEffect(() => {
+    console.log(`Quiz ID: ${quizId}`); //checking
     if (quizId) {
+      console.log(`Dispatching action to fetch quiz with ID: ${quizId}`); //checking
       dispatch<any>(getQuiz(quizId));
+    }
+    else{
+      console.log("No Quiz ID found, not dispatching getQuiz action"); //checking
     }
   }, [dispatch, quizId]);
 
   useEffect(() => {
-    setTimer(timeLimit);
+    if (typeof timeLimit === 'number' && timeLimit > 0) {
+      setTimer(timeLimit);
+    }
   }, [timeLimit]);
 
   useEffect(() => {
