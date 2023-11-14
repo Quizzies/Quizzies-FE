@@ -117,16 +117,21 @@ module.exports = function (req, res, next) {
             {
               "questionId": 1,
               "questionTypeId": 3,
-              "questionTxt": "What is the time complexity of merge sort?",
+              "questionTxt": "Question number 2 test?",
               "answers": [
                 {
                   "answerId": 1,
-                  "answerValue": "b ^ 2",
+                  "answerValue": "Answer option #1",
                   "isCorrect": true
                 },
                 {
                   "answerId": 2,
-                  "answerValue": "log n",
+                  "answerValue": "Answer option #2",
+                  "isCorrect": false
+                },
+                {
+                  "answerId": 3,
+                  "answerValue": "Answer option #3",
                   "isCorrect": false
                 }
               ]
@@ -148,10 +153,12 @@ module.exports = function (req, res, next) {
                 }
               ]
             }
+            
           ],
           timeLimit: 90
         };
       }
+      
       return res.status(200).json(quizData);
     } else {
       next();

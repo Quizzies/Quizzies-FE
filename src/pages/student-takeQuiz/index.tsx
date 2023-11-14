@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { Field, Form, Formik } from 'formik';
 import { object, string } from 'yup';
 import { OutlineButton, PrimaryButton, SectionContainer } from '../../components';
@@ -18,7 +18,12 @@ const StudentTakeQuiz = () => {
   const quizId = quizNumber ? parseInt(quizNumber) : null;
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { loading, quizName, courseName, courseId, questions, timeLimit } = useSelector((state: RootState) => state.quiz);
+  const location = useLocation();
+  
+
+  const { courseId, courseName } = location.state || {};
+
+  const { loading, questions, timeLimit } = useSelector((state: RootState) => state.quiz);
   const [timer, setTimer] = useState(timeLimit);
 
   useEffect(() => {
@@ -58,7 +63,7 @@ const StudentTakeQuiz = () => {
     console.log(values);
   };
 
-  const currentQuestion = questions && questions.length > 0 ? questions[0].questionTxt : 'Loading question...'; // Unnecessary?
+  const currentQuestion = questions && questions.length > 0 ? questions[0].questionTxt : 'Loading question...';
 
   return (
     <SectionContainer>

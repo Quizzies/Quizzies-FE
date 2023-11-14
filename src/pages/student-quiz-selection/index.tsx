@@ -51,7 +51,9 @@ const StudQuizSelect: React.FC = () => {
             <div className="mb-1">
               <p
                 className="my-0 clickable"
-                onClick={() => navigate(`/student-takeQuiz/${quiz.quizId}`)}
+                onClick={() => navigate(`/student-takeQuiz/${quiz.quizId}`, {
+                  state: { courseId: courseId, courseName: courseName },
+                })}
               >
                 {quiz.quizName}
               </p>
@@ -60,7 +62,7 @@ const StudQuizSelect: React.FC = () => {
               </span>
             </div>
           </React.Fragment>
-        ))}
+        ))},
       </SectionContainer>
       <OutlineButton
         additionalStyles="stack-end"
