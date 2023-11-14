@@ -62,7 +62,7 @@ const StudQuizSelect: React.FC = () => {
               </span>
             </div>
           </React.Fragment>
-        ))},
+        ))}
       </SectionContainer>
       <OutlineButton
         additionalStyles="stack-end"
