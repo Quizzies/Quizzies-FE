@@ -63,24 +63,41 @@ const StudentAnswer = () => {
     <SectionContainer>
       <div>
         <h1>Results for {quizData.quizName}</h1>
-        {quizData.questions.map(question => (
-          <div key={question.questionId}>
-            <p>{question.questionTxt}</p>
-            <p>Your Answer: {question.questionId && studentAnswers[question.questionId]}</p>
-            <p>
-              {question.questionId && checkAnswerCorrectness(question, studentAnswers[question.questionId])
-                ? 'Correct'
-                : 'Incorrect'}
-            </p>
-          </div>
-        ))}
+        {quizData.questions.map(question => {
+
+
+          // CHECK QUESTION ID DEFINITION METHODS
+
+
+          if (typeof question.questionId === 'undefined') return null;
+  
+          const correctAnswer = question.answers?.find(answer => answer.isCorrect)?.answerValue;
+
+
+          //FETCH STUDs ANSWERS
+
+          const studentAnswer = studentAnswers[question.questionId];
+  
+          return (
+            <div key={question.questionId}>
+              <p><b>Question:</b> {question.questionTxt}</p>
+              <p><b>Correct Answer:</b> {correctAnswer}</p>
+              <p><b>Your Answer:</b> {studentAnswer}</p>
+              <p>
+                {checkAnswerCorrectness(question, studentAnswer)
+                  ? <b style={{ color: 'green' }}>Correct</b>
+                  : <b style={{ color: 'red' }}>Incorrect</b>}
+              </p>
+            </div>
+          );
+        })}
       </div>
       <div style={{ display: 'flex', justifyContent: 'center', marginTop: '3rem' }}>
         <OutlineButton
-        additionalStyles="button button-submit"
-        value="Dashboard"
-        onClick={handleBackToDashboard}
-      />
+          additionalStyles="button button-submit"
+          value="Dashboard"
+          onClick={handleBackToDashboard}
+        />
       </div>
     </SectionContainer>
   );

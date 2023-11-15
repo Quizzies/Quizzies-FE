@@ -82,7 +82,7 @@ const StudentTakeQuiz = () => {
     }
   
     if (!hasAnsweredCurrentQuestion) {
-      alert("Please select an answer before proceeding.");
+      alert("Please select at least one option, otherwise you won't be graded for this question.");
       return;
     }
   

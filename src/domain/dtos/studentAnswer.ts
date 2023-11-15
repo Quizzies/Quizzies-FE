@@ -1,6 +1,9 @@
 export interface StudentAnswer {
+    firstName: string
+    lastName: string
+    email: string
+    userType:'S';
     quizId: number;
-    userId: number;
     answers: {
       questionId: number;
       answerValue: string | boolean;
