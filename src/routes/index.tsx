@@ -17,6 +17,7 @@ import {
   QuizResults,
   QuizSummary
 } from "../pages";
+import StudentAnswer from "../pages/studentAnswer";
 
 
 const router = createBrowserRouter(
@@ -32,6 +33,7 @@ const router = createBrowserRouter(
         <Route path="/quiz/:quizId/summary" element={<QuizSummary />} />
         <Route path="/student-quiz-selection/:id" element={<StudQuizSelect />} />
         <Route path="/student-takeQuiz/:quizNumber" element={<StudentTakeQuiz />} />
+        <Route path="/student-answer/:id" element={<StudentAnswer />} />
         <Route
           path="/question/:questionId/edit"
           element={<EditAnswerCorrectness />}

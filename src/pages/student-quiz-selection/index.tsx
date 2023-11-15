@@ -53,7 +53,7 @@ const StudQuizSelect: React.FC = () => {
                 className="my-0 clickable"
                 onClick={() => navigate(`/student-takeQuiz/${quiz.quizId}`, {
                   state: { courseId: courseId, courseName: courseName },
-                })}
+                })}                
               >
                 {quiz.quizName}
               </p>

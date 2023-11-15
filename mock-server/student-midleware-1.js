@@ -116,7 +116,7 @@ module.exports = function (req, res, next) {
           questions: [
             {
               "questionId": 1,
-              "questionTypeId": 3,
+              "questionTypeId": 2,
               "questionTxt": "Question number 2 test?",
               "answers": [
                 {
@@ -138,7 +138,7 @@ module.exports = function (req, res, next) {
             },
             {
               "questionId": 2,
-              "questionTypeId": 2,
+              "questionTypeId": 3,
               "questionTxt": "What is bogo sort?",
               "answers": [
                 {
