@@ -28,3 +28,16 @@
     font-size: 1.5rem !important;
   }
 }
+
+@media(max-width: 600px) {
+  .button-action {
+    min-width: auto;
+    width: 48%;
+  }
+}
+
+@media(max-width: 600px) {
+  .button-container {
+    padding: 0 10px;
+  }
+}

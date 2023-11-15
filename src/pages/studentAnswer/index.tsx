@@ -75,11 +75,13 @@ const StudentAnswer = () => {
           </div>
         ))}
       </div>
+      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '3rem' }}>
         <OutlineButton
         additionalStyles="button button-submit"
         value="Dashboard"
         onClick={handleBackToDashboard}
       />
+      </div>
     </SectionContainer>
   );
 };

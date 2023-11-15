@@ -154,19 +154,24 @@ const StudentTakeQuiz = () => {
   return (
     <SectionContainer>
       <div className="flex justify-around items-center mt-4 mb-4">
-      <h1 className="text-xl font-bold"></h1>
+        <h1 className="text-xl font-bold">Quiz Time</h1>
         <span>Time left: {timer !== undefined ? timer : 'Loading...'}</span>
       </div>
       <div>
         <div className="font-semibold mb-4">Question: {currentQuestion?.questionTxt}</div>
         <div className="mb-6">{renderQuestionInput(currentQuestion)}</div>
-        <OutlineButton additionalStyles="button button-submit" value="Back" onClick={() => navigate(-1)} />
-        <PrimaryButton 
-          additionalStyles="button button-secondary" 
-          value={isLastQuestion ? "Submit" : "Next"} 
-          type={"button" as any} 
-          onClick={handleButtonClick} 
-        />
+        <div className="flexbox justify-between items-center px-4 button-container">
+      <OutlineButton
+        additionalStyles="button button-action"
+        value="Back"
+        onClick={() => navigate(-1)}
+      />
+      <PrimaryButton
+        additionalStyles="button button-action"
+        value={isLastQuestion ? "Submit" : "Next"}
+        onClick={handleButtonClick}
+      />
+    </div>
       </div>
     </SectionContainer>
   );
