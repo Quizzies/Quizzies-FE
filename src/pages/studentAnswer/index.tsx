@@ -7,6 +7,7 @@ import { backendURL } from '../../ts/constants';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { StudentAnswer as StudentAnswerDTO } from '../../domain/dtos/studentAnswer';
+import { QuestionTypeEnum } from '../../ts/enums';
 
 
 interface QuizData {
@@ -46,6 +47,33 @@ const StudentAnswer = () => {
     }
   }, [quizId]);
 
+  useEffect(() => {
+    if (quizData) {
+      const formattedAnswers = quizData.questions.reduce<{ [key: number]: string }>((acc, question) => {
+        const storedAnswer = localStorage.getItem(`answer_${question.questionId}`);
+        if (storedAnswer && typeof question.questionId !== 'undefined') {
+          const studentAnswerDTO: StudentAnswerDTO = JSON.parse(storedAnswer);
+
+          if (question.answers && question.questionTypeId === QuestionTypeEnum.MULTIPLE_CHOICE) {
+            // mcq
+            acc[question.questionId] = studentAnswerDTO.answerIds
+              .map(id => question.answers?.find(a => a.answerId === id)?.answerValue)
+              .filter(Boolean)
+              .join(", ");
+          } else if (question.answers) {
+            //single choice
+            acc[question.questionId] = question.answers.find(a => a.answerId === studentAnswerDTO.answerIds[0])?.answerValue || "No answer selected";
+
+          }
+        }
+        return acc;
+      }, {});
+
+      setStudentAnswers(formattedAnswers);
+    }
+  }, [quizData]);
+  
+
   const checkAnswerCorrectness = (question: QuizQuestion, studentAnswer: string) => {
     const correctAnswer = question.answers?.find(a => a.isCorrect);
     return studentAnswer === correctAnswer?.answerValue;
@@ -58,6 +86,7 @@ const StudentAnswer = () => {
   const handleBackToDashboard = () => {
     navigate('/');
   };
+  
 
   return (
     <SectionContainer>
@@ -82,7 +111,7 @@ const StudentAnswer = () => {
             <div key={question.questionId}>
               <p><b>Question:</b> {question.questionTxt}</p>
               <p><b>Correct Answer:</b> {correctAnswer}</p>
-              <p><b>Your Answer:</b> {studentAnswer}</p>
+              <p><b>Your Answer:</b> {studentAnswer ? studentAnswer : "SHOULDN'T HAVE NO ANSWERS"}</p>
               <p>
                 {checkAnswerCorrectness(question, studentAnswer)
                   ? <b style={{ color: 'green' }}>Correct</b>

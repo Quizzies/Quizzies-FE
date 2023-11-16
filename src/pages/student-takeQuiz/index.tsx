@@ -8,6 +8,7 @@ import { getQuiz } from '../../store/features/quiz/quizAction';
 import { updateAnswerChoice } from '../../store/features/quiz/answer/quizAnswerSlice';
 import { QuestionTypeEnum } from '../../ts/enums';
 import { QuizQuestion, QuizAnswer } from '../../domain/models';
+import { createStudentAnswerDTO } from '../../domain/dtos/studentAnswer';
 
 const StudentTakeQuiz = () => {
   const navigate = useNavigate();
@@ -67,10 +68,19 @@ const StudentTakeQuiz = () => {
     });
   };
 
+  const handleBackButtonClick = () => {
+    if (currentQuestionIndex === 0) {
+      alert("Going back would have you leave the quiz!");
+      //Back to previous question
+    } else {
+      setCurrentQuestionIndex(currentQuestionIndex - 1);
+    }
+  };
+
   const handleButtonClick = () => {
     let hasAnsweredCurrentQuestion = false;
     const currentQuestionId = questions?.[currentQuestionIndex]?.questionId;
-  
+
     if (currentQuestionId !== undefined) {
       const currentQuestionKey = `question_${currentQuestionId}`;
       
@@ -86,6 +96,7 @@ const StudentTakeQuiz = () => {
       return;
     }
   
+    saveCurrentAnswer();
     if (isLastQuestion) {
       console.log('Final Submission:', answers);
       navigate(`/student-answer/${quizId}`);
@@ -104,6 +115,38 @@ const StudentTakeQuiz = () => {
       console.log("No questions left");
     }
   };  
+
+  const saveCurrentAnswer = () => {
+    const currentQuestionId = questions?.[currentQuestionIndex]?.questionId;
+  
+    // Ensure both quizId and currentQuestionId are not null or undefined
+    if (quizId !== null && currentQuestionId !== undefined) {
+      // Safely handle potential undefined 'questions'
+      const currentQuestionType = questions?.[currentQuestionIndex]?.questionTypeId;
+  
+      let answerIds: number[] = [];
+      if (currentQuestionType === QuestionTypeEnum.MULTIPLE_CHOICE) {
+        answerIds = Object.keys(answers)
+          .filter(key => key.startsWith(`question_${currentQuestionId}_`) && answers[key] === true)
+          .map(key => parseInt(key.split('_')[2]));
+      } else {
+        const answerValue = answers[`question_${currentQuestionId}`];
+        if (typeof answerValue === 'string') {
+          answerIds = [parseInt(answerValue)];
+        }
+      }
+  
+      // Format the answer according to DTO, if we have valid answerIds
+      if (answerIds.length > 0) {
+        const studentAnswer = createStudentAnswerDTO(quizId, currentQuestionId, answerIds);
+  
+        // Save the answer locally for testing (replace this with API call in production)
+        console.log('Saving answer:', studentAnswer);
+        localStorage.setItem(`answer_${currentQuestionId}`, JSON.stringify(studentAnswer));
+      }
+    }
+  };
+  
   
 
   const handleSubmit = () => {
@@ -164,7 +207,7 @@ const StudentTakeQuiz = () => {
       <OutlineButton
         additionalStyles="button button-action"
         value="Back"
-        onClick={() => navigate(-1)}
+        onClick={handleBackButtonClick}
       />
       <PrimaryButton
         additionalStyles="button button-action"
