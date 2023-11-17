@@ -78,24 +78,6 @@ const StudentTakeQuiz = () => {
   };
 
   const handleButtonClick = () => {
-    let hasAnsweredCurrentQuestion = false;
-    const currentQuestionId = questions?.[currentQuestionIndex]?.questionId;
-
-    if (currentQuestionId !== undefined) {
-      const currentQuestionKey = `question_${currentQuestionId}`;
-      
-      if (questions?.[currentQuestionIndex]?.questionTypeId === QuestionTypeEnum.MULTIPLE_CHOICE) {
-        hasAnsweredCurrentQuestion = Object.keys(answers).some(key => key.startsWith(currentQuestionKey) && answers[key] === true);
-      } else {
-        hasAnsweredCurrentQuestion = answers.hasOwnProperty(currentQuestionKey);
-      }
-    }
-  
-    if (!hasAnsweredCurrentQuestion) {
-      alert("Please select at least one option, otherwise you won't be graded for this question.");
-      return;
-    }
-  
     saveCurrentAnswer();
     if (isLastQuestion) {
       console.log('Final Submission:', answers);
@@ -119,33 +101,45 @@ const StudentTakeQuiz = () => {
   const saveCurrentAnswer = () => {
     const currentQuestionId = questions?.[currentQuestionIndex]?.questionId;
   
-    // Ensure both quizId and currentQuestionId are not null or undefined
-    if (quizId !== null && currentQuestionId !== undefined) {
-      // Safely handle potential undefined 'questions'
-      const currentQuestionType = questions?.[currentQuestionIndex]?.questionTypeId;
+    if (quizId !== null && currentQuestionId !== undefined && questions) {
+      let answerId: (number[] | string[]) = [];
+      const currentQuestionKey = `question_${currentQuestionId}`;
+      const isMultipleChoice = questions[currentQuestionIndex]?.questionTypeId === QuestionTypeEnum.MULTIPLE_CHOICE;
   
-      let answerIds: number[] = [];
-      if (currentQuestionType === QuestionTypeEnum.MULTIPLE_CHOICE) {
-        answerIds = Object.keys(answers)
-          .filter(key => key.startsWith(`question_${currentQuestionId}_`) && answers[key] === true)
+      // MCQ
+      if (isMultipleChoice) {
+        answerId = Object.keys(answers)
+          .filter(key => key.startsWith(`${currentQuestionKey}_`) && answers[key] === true)
           .map(key => parseInt(key.split('_')[2]));
+      // SCQ
       } else {
-        const answerValue = answers[`question_${currentQuestionId}`];
-        if (typeof answerValue === 'string') {
-          answerIds = [parseInt(answerValue)];
+        const answerValue = answers[currentQuestionKey];
+        if (typeof answerValue === 'string' && answerValue !== "") {
+          const selectedAnswer = questions[currentQuestionIndex].answers.find(answer => answer.answerValue === answerValue);
+          if (selectedAnswer) {
+            answerId = [selectedAnswer.answerId];
+          }
         }
       }
   
-      // Format the answer according to DTO, if we have valid answerIds
-      if (answerIds.length > 0) {
-        const studentAnswer = createStudentAnswerDTO(quizId, currentQuestionId, answerIds);
-  
-        // Save the answer locally for testing (replace this with API call in production)
-        console.log('Saving answer:', studentAnswer);
-        localStorage.setItem(`answer_${currentQuestionId}`, JSON.stringify(studentAnswer));
+      // Default answer
+      if (answerId.length === 0) {
+        answerId = ["No answer was provided for this question."];
       }
+  
+      const studentAnswer = createStudentAnswerDTO(quizId, currentQuestionId, answerId);
+
+      // Temp - For testing - Remove
+      console.log('Saving answer:', studentAnswer);
+      localStorage.setItem(`answer_${currentQuestionId}`, JSON.stringify(studentAnswer));
     }
   };
+  
+  const [showBackWarning, setShowBackWarning] = useState(false);
+
+  
+  
+  
   
   
 

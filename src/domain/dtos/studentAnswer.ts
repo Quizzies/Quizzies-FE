@@ -1,12 +1,12 @@
 export interface StudentAnswer {
-  answerIds: number[]; // reminder to change it back to number of does not work out
+  answerId: number[] | string[]; // handles both answer types as well as default ansers (string)
   quizId: number;
   questionId: number;
 }
-//Optional ?
-export const createStudentAnswerDTO = (quizId: number, questionId: number, answerIds: number[]): StudentAnswer => {
+
+export const createStudentAnswerDTO = (quizId: number, questionId: number, answerId: number[] | string[]): StudentAnswer => {
   return {
-    answerIds,
+    answerId,
     quizId,
     questionId
   };

@@ -53,25 +53,28 @@ const StudentAnswer = () => {
         const storedAnswer = localStorage.getItem(`answer_${question.questionId}`);
         if (storedAnswer && typeof question.questionId !== 'undefined') {
           const studentAnswerDTO: StudentAnswerDTO = JSON.parse(storedAnswer);
-
-          if (question.answers && question.questionTypeId === QuestionTypeEnum.MULTIPLE_CHOICE) {
-            // mcq
-            acc[question.questionId] = studentAnswerDTO.answerIds
+  
+          // Default answer
+          if (studentAnswerDTO.answerId.length === 1 && typeof studentAnswerDTO.answerId[0] === 'string') {
+            acc[question.questionId] = studentAnswerDTO.answerId[0];
+            // MCQ
+          } else if (question.answers && question.questionTypeId === QuestionTypeEnum.MULTIPLE_CHOICE) {
+            acc[question.questionId] = studentAnswerDTO.answerId
               .map(id => question.answers?.find(a => a.answerId === id)?.answerValue)
               .filter(Boolean)
               .join(", ");
+              // SCQ
           } else if (question.answers) {
-            //single choice
-            acc[question.questionId] = question.answers.find(a => a.answerId === studentAnswerDTO.answerIds[0])?.answerValue || "No answer selected";
-
+            acc[question.questionId] = question.answers.find(a => a.answerId === studentAnswerDTO.answerId[0])?.answerValue || "";
           }
         }
         return acc;
       }, {});
-
+  
       setStudentAnswers(formattedAnswers);
     }
   }, [quizData]);
+  
   
 
   const checkAnswerCorrectness = (question: QuizQuestion, studentAnswer: string) => {
