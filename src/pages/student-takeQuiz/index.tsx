@@ -8,7 +8,9 @@ import { getQuiz } from '../../store/features/quiz/quizAction';
 import { updateAnswerChoice } from '../../store/features/quiz/answer/quizAnswerSlice';
 import { QuestionTypeEnum } from '../../ts/enums';
 import { QuizQuestion, QuizAnswer } from '../../domain/models';
-import { createStudentAnswerDTO } from '../../domain/dtos/studentAnswer';
+import { createStudAnswer } from '../../domain/dtos/studentAnswer';
+import { backendURL } from '../../ts/constants';
+import studentAnswer from '../studentAnswer';
 
 const StudentTakeQuiz = () => {
   const navigate = useNavigate();
@@ -36,6 +38,15 @@ const StudentTakeQuiz = () => {
   }, [dispatch, quizId]);
 
 
+  // reset to avoid permanently saved answers. Remove if useless
+  useEffect(() => {
+    return () => {
+      setAnswers({});
+      setCurrentQuestionIndex(0);
+    };
+  }, []);
+
+
   useEffect(() => {
     if (typeof timeLimit === 'number' && timeLimit > 0 && timer === -1) {
       console.log('Timer is set to:', timeLimit);
@@ -54,7 +65,7 @@ const StudentTakeQuiz = () => {
   
       return () => clearInterval(countdown);
     } else if (timer === 0) {
-      console.log('Time is up, auto submission and navigating to answer page');
+      console.log('Time is up, navigating to answer page');
       navigate(`/student-answer/${quizId}`);
     }
   }, [timer, navigate, quizId]);
@@ -68,16 +79,62 @@ const StudentTakeQuiz = () => {
     });
   };
 
-  const handleBackButtonClick = () => {
-    if (currentQuestionIndex === 0) {
-      alert("Going back would have you leave the quiz!");
-      //Back to previous question
-    } else {
-      setCurrentQuestionIndex(currentQuestionIndex - 1);
-    }
-  };
+  const handleBackButtonClick = async () => {
+    if (!questions || questions.length === 0 || currentQuestionIndex >= questions.length || !questions[currentQuestionIndex]) {
+      console.error("Questions not loaded or index out of bounds");
+      return;
+  }
 
-  const handleButtonClick = () => {
+    const currentQuestion = questions[currentQuestionIndex];
+  
+    const previousQuestion = questions[currentQuestionIndex - 1];
+    if (!previousQuestion) return;
+  
+    // Collect selected answers for the current question (similar logic as in handleButtonClick)
+    let answerId: number[] = [];
+    const currentQuestionKey = `question_${questions[currentQuestionIndex].questionId}`;
+    const isMultipleChoice = questions[currentQuestionIndex].questionTypeId === QuestionTypeEnum.MULTIPLE_CHOICE;
+  
+    if (isMultipleChoice) {
+      answerId = Object.keys(answers)
+        .filter(key => key.startsWith(`${currentQuestionKey}_`) && answers[key] === true)
+        .map(key => parseInt(key.split('_')[2]));
+    } else {
+      const answerValue = answers[currentQuestionKey];
+      if (typeof answerValue === 'string' && answerValue !== "") {
+        const selectedAnswer = questions[currentQuestionIndex].answers.find(answer => answer.answerValue === answerValue);
+        if (selectedAnswer) {
+          answerId = [selectedAnswer.answerId];
+        }
+      }
+    }
+  
+    // Direction is set to 'B' for backward when clicking Back
+    const direction = 'B';
+    const studentAnswer = createStudAnswer(answerId, direction);
+
+  try {
+    const response = await fetch(`${backendURL}/api/responses/${currentQuestion.questionId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ direction: 'F' })
+    });    
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    setCurrentQuestionIndex(currentQuestionIndex - 1);
+  } catch (error) {
+    console.error('Error going back:', error);
+  }
+};
+  
+
+  /*const handleButtonClick = () => {
     saveCurrentAnswer();
     if (isLastQuestion) {
       console.log('Final Submission:', answers);
@@ -85,7 +142,68 @@ const StudentTakeQuiz = () => {
     } else {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     }
+  };*/
+
+
+  // New button click
+
+  const handleButtonClick = async () => {
+    if (!questions || questions.length === 0 || currentQuestionIndex >= questions.length) {
+      console.error("Questions not loaded or index out of bounds");
+      return;
+    }
+  
+    const currentQuestion = questions[currentQuestionIndex];
+    
+    let answerId: number[] = [];
+    const currentQuestionKey = `question_${currentQuestion.questionId}`;
+    const isMultipleChoice = currentQuestion.questionTypeId === QuestionTypeEnum.MULTIPLE_CHOICE;
+  
+    if (isMultipleChoice) {
+      answerId = Object.keys(answers)
+        .filter(key => key.startsWith(`${currentQuestionKey}_`) && answers[key] === true)
+        .map(key => parseInt(key.split('_')[2]));
+    } else {
+      const answerValue = answers[currentQuestionKey];
+      if (typeof answerValue === 'string' && answerValue !== "") {
+        const selectedAnswer = currentQuestion.answers.find(answer => answer.answerValue === answerValue);
+        if (selectedAnswer) {
+          answerId = [selectedAnswer.answerId];
+        }
+      }
+    }
+  
+    try {
+      const studentAnswer = createStudAnswer(answerId, 'F');
+      const response = await fetch(`${backendURL}/api/responses/${currentQuestion.questionId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(studentAnswer)
+      });
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+  
+      const data = await response.json();
+      if (data.isCompleted) {
+        // Quiz complete so skip to answer page
+        console.log('TESTING');
+        navigate(`/student-answer/${quizId}`);
+      } else {
+        setCurrentQuestionIndex(currentQuestionIndex + 1);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
+  
+  
+
+
+  
   
 
   const isLastQuestion = currentQuestionIndex === (questions?.length ?? 0) - 1;
@@ -98,7 +216,7 @@ const StudentTakeQuiz = () => {
     }
   };  
 
-  const saveCurrentAnswer = () => {
+  /*const saveCurrentAnswer = () => {
     const currentQuestionId = questions?.[currentQuestionIndex]?.questionId;
   
     if (quizId !== null && currentQuestionId !== undefined && questions) {
@@ -129,11 +247,13 @@ const StudentTakeQuiz = () => {
   
       const studentAnswer = createStudentAnswerDTO(quizId, currentQuestionId, answerId);
 
+      // change from local storage to backend partial submit later (POST to backend & check response status)
+
       // Temp - For testing - Remove
       console.log('Saving answer:', studentAnswer);
       localStorage.setItem(`answer_${currentQuestionId}`, JSON.stringify(studentAnswer));
     }
-  };
+  };*/
   
   const [showBackWarning, setShowBackWarning] = useState(false);
 

@@ -2,6 +2,9 @@ module.exports = function (req, res, next) {
   if (req.method === 'GET') {
     if (req.url.startsWith("/courses/")) {
       const courseId = req.url.split("/")[2];
+      const quizzes = {
+        "1": { totalQuestions: 2 },
+      };
       let courseData = {};
 
       if (courseId === "1980") {
@@ -163,6 +166,48 @@ module.exports = function (req, res, next) {
     } else {
       next();
     }
+  } else if (req.method === 'POST' && req.url.startsWith("/api/responses/")) {
+    console.log("Received POST request at /api/responses/");
+    const questionId = parseInt(req.url.split("/")[3]);
+    console.log("Question ID:", questionId);
+    console.log("Request body:", req.body);
+    const requestBody = req.body;
+
+    try {
+      /*requestBody = JSON.parse(req.body);*/
+    } catch (error) {
+      console.log("Request Body:", req.body);
+      return res.status(400).json({ error: "Invalid request body" });
+    }
+
+    const direction = requestBody.direction;
+    let nextQuestionId = questionId;
+    let isCompleted = false;
+
+    // direction simulation for DTO
+    if (direction === 'F') {
+      nextQuestionId++;
+    } else if (direction === 'B') {
+      nextQuestionId--;
+    }
+
+    // HArdcoding questions number
+    if (nextQuestionId > 2) {
+      isCompleted = true;
+      nextQuestionId = null;
+    } else if (nextQuestionId < 1) {
+      nextQuestionId = 1;
+    }
+
+    let response = {
+      isCompleted: isCompleted,
+      question: nextQuestionId ? {
+        questionId: nextQuestionId,
+        questionTxt: "Question Text for " + nextQuestionId,
+      } : null
+    };
+
+    return res.status(200).json(response);
   } else if (req.method === 'POST' && req.url === '/login') {
     const { email, password } = req.body;
     if (email === 'test@gmail.com' && password === 'testpassword') {
