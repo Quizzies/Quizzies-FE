@@ -25,7 +25,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "prod": "npm run build && npm run deploy",
+    "deploy": "aws s3 sync build/ s3://quizziesfe"
   },
   "eslintConfig": {
     "extends": [
@@ -47,10 +49,5 @@
   },
   "devDependencies": {
     "sass": "^1.69.4"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "server": "json-server --watch mock-server/data.json --middlewares mock-server/student-midleware-1.js --port 8000",
-    "dev": "concurrently \"npm run start\" \"npm run server\""
-  }  
+  }
 }
