@@ -4,19 +4,27 @@ import { OutlineButton, SectionContainer } from '../../components';
 import Spinner from '../../components/common/spinner';
 import { backendURL } from '../../ts/constants';
 import { studQuizResultdto } from '../../domain/dtos/student-quiz-result';
+import { getToken } from '../../ts/utils/auth';
 
 const StudentAnswer = () => {
   const { id: quizId } = useParams<{ id: string }>();
   const [quizResult, setQuizResult] = useState<studQuizResultdto | null>(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const token = getToken();
 
   useEffect(() => {
     const fetchQuizResults = async () => {
       setLoading(true);
       try {
         console.log(`Fetching results from: ${backendURL}/api/responses/${quizId}/result`);
-        const response = await fetch(`${backendURL}/api/responses/${quizId}/result`);
+
+        const response = await fetch(`${backendURL}/api/responses/${quizId}/result`, {
+          headers: {
+            'Authorization': `Bearer ${token}` // double check with back end that it must be in header
+          }
+        });
+        
         console.log("Fetch response:", response);
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);

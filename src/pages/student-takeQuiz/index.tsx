@@ -11,6 +11,7 @@ import { QuizQuestion, QuizAnswer } from '../../domain/models';
 import { createStudAnswer } from '../../domain/dtos/studentAnswer';
 import { backendURL } from '../../ts/constants';
 import studentAnswer from '../studentAnswer';
+import { getToken } from '../../ts/utils/auth';
 
 const StudentTakeQuiz = () => {
   const navigate = useNavigate();
@@ -23,6 +24,7 @@ const StudentTakeQuiz = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [timer, setTimer] = useState<number>(-1);
   const [answers, setAnswers] = useState<{ [key: string]: string | boolean }>({});
+  const token = getToken();
 
   
   
@@ -118,9 +120,10 @@ const StudentTakeQuiz = () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}` // double check with back end that it must be in header
       },
-      body: JSON.stringify({ direction: 'F' })
-    });    
+      body: JSON.stringify(studentAnswer)
+    });  
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
