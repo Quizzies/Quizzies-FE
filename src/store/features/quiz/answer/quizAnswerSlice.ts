@@ -22,6 +22,7 @@ const quizAnswerSlice = createSlice<QuizAnswerState, any>({
   name: "quizAnswer",
   initialState,
   reducers: {
+    reset: () => initialState,
     addAnswerChoice: (
       state: QuizAnswerState,
       { payload }: PayloadAction<QuizAnswer>
@@ -128,7 +129,7 @@ const quizAnswerSlice = createSlice<QuizAnswerState, any>({
   },
 });
 
-export const { addAnswerChoice, removeAnswerChoice, updateAnswerChoice } =
+export const { addAnswerChoice, removeAnswerChoice, updateAnswerChoice, reset } =
   quizAnswerSlice.actions as any;
 
 export default quizAnswerSlice.reducer;

@@ -20,7 +20,9 @@ const initialState: QuizQuestionState = {
 const quizQuestionSlice = createSlice<QuizQuestionState, any>({
   name: "quizQuestion",
   initialState,
-  reducers: {},
+  reducers: {
+    reset: () => initialState
+  },
   extraReducers: {
     // create quiz question
     [createQuizQuestion.pending as any]: (state: QuizQuestionState) => {
@@ -94,5 +96,7 @@ const quizQuestionSlice = createSlice<QuizQuestionState, any>({
     [updateQuiz.fulfilled as any]: () => initialState,
   },
 });
+
+export const { reset } = quizQuestionSlice.actions as any;
 
 export default quizQuestionSlice.reducer;

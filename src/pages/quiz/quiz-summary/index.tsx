@@ -6,6 +6,9 @@ import Spinner from "../../../components/common/spinner";
 import { RootState } from "../../../store";
 import { getQuiz, updateQuiz } from "../../../store/features/quiz/quizAction";
 import { updateIsPosted } from "../../../store/features/quiz/quizSlice";
+import  { reset as resetQuizQuestionState } from "../../../store/features/quiz/question/quizQuestionSlice";
+import { reset as resetQuizQuestionTypeState } from "../../../store/features/quiz/question-types/questionTypesSlice";
+import { reset as resetQuizQuestionAnswerState } from "../../../store/features/quiz/answer/quizAnswerSlice";
 
 export const QuizSummary = () => {
   const {
@@ -59,6 +62,15 @@ export const QuizSummary = () => {
     dispatch(updateQuiz(form) as any);
   }
 
+  function goToAddQuestion() {
+    // reset previous state
+    dispatch(resetQuizQuestionState());
+    dispatch(resetQuizQuestionTypeState());
+    dispatch(resetQuizQuestionAnswerState());
+
+    navigate(`/quiz/${quizId}/add-question`);
+  }
+
   return (
     <SectionContainer>
       <SectionContainer additionalStyles="px-0">
@@ -79,6 +91,7 @@ export const QuizSummary = () => {
             >
               Quiz: {question.questionTxt}
             </p>
+            <p className="call-to-action left clickable mt-2" onClick={goToAddQuestion}>Add more questions (+)</p>
           </div>
         ))}
       </SectionContainer>

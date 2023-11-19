@@ -14,7 +14,9 @@ const initialState: QuestionTypeState = {
 const questionTypesSlice = createSlice<QuestionTypeState, any>({
   name: "questionTypes",
   initialState,
-  reducers: {},
+  reducers: {
+    reset: () => initialState
+  },
   extraReducers: {
     // create quiz
     [getQuestionTypes.pending as any]: (state: QuestionTypeState) => {
@@ -40,5 +42,7 @@ const questionTypesSlice = createSlice<QuestionTypeState, any>({
     [updateQuiz.fulfilled as any]: () => initialState,
   },
 });
+
+export const { reset } = questionTypesSlice.actions as any;
 
 export default questionTypesSlice.reducer;
