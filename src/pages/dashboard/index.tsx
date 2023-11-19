@@ -12,9 +12,9 @@ const Dashboard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // automatically authenticate user if token is found
+  // Automatically authenticate user if token is found
   const { data, isFetching } = useGetUserDetailsQuery("userDetails", {
-    // perform a refetch every 15mins
+    // Perform a refetch every 15 minutes
     pollingInterval: 900000,
   });
 
@@ -24,9 +24,12 @@ const Dashboard = () => {
 
   if (isFetching) return <Spinner type="spinner" />;
 
-  function goToCourse(courseId: number) {
-    navigate(`/course/${courseId}`);
-  }
+  const goToCourse = (courseId: number, courseName: string) => {
+    const destination = userInfo?.userType === "T" 
+      ? `/course/${courseId}`
+      : `/student-quiz-selection/${courseId}`;
+    navigate(destination, { state: { courseId, courseName } });
+  };
 
   return (
     <>
@@ -36,20 +39,17 @@ const Dashboard = () => {
       </SectionContainer>
       <SectionContainer additionalStyles="pt-0">
         <p className="p-primary">
-          {userInfo?.userType === "T"
-            ? "Courses you teach"
-            : "Enrolled courses"}
+          {userInfo?.userType === "T" ? "Courses you teach" : "Enrolled courses"}
         </p>
-        {userInfo?.courses &&
-          userInfo.courses.map((course) => (
-            <p
-              onClick={() => goToCourse(course.courseId)}
-              className="clickable"
-              key={course.courseId}
-            >
-              cs {course.courseId} - {course.courseName}
-            </p>
-          ))}
+        {userInfo?.courses?.map((course) => (
+          <p
+            onClick={() => goToCourse(course.courseId, course.courseName)}
+            className="clickable"
+            key={course.courseId}
+          >
+            cs {course.courseId} - {course.courseName}
+          </p>
+        ))}
       </SectionContainer>
     </>
   );
