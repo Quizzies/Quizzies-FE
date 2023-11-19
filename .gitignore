@@ -130,4 +130,4 @@ dist
 .pnp.*
 
 # constant.ts file
-constants.ts
+src/ts/constants.ts
