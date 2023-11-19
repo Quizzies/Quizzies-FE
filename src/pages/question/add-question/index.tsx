@@ -76,7 +76,9 @@ export const AddQuestion = () => {
         }}
         validationSchema={quizQuestionSchema}
         onSubmit={(values) => {
-          dispatch(createQuizQuestion(values) as any);
+          const form = { ...values}
+          form.quizId = +quizId!
+          dispatch(createQuizQuestion(form) as any);
         }}
       >
         {({ setFieldValue }) => (
