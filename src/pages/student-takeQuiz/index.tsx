@@ -40,7 +40,7 @@ const StudentTakeQuiz = () => {
   }, [dispatch, quizId]);
 
 
-  // reset to avoid permanently saved answers. Remove if useless
+  // reset to avoid permanently saved answers. Might remove if useless
   useEffect(() => {
     return () => {
       setAnswers({});
@@ -83,7 +83,7 @@ const StudentTakeQuiz = () => {
 
   const handleBackButtonClick = async () => {
     if (!questions || questions.length === 0 || currentQuestionIndex >= questions.length || !questions[currentQuestionIndex]) {
-      console.error("Questions not loaded or index out of bounds");
+      console.error("Index out of bounds");
       return;
   }
 
@@ -120,7 +120,7 @@ const StudentTakeQuiz = () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}` // double check with back end that it must be in header
+        'Authorization': `Bearer ${token}` // Token must be in header as per backend instructions
       },
       body: JSON.stringify(studentAnswer)
     });  
@@ -135,20 +135,6 @@ const StudentTakeQuiz = () => {
     console.error('Error going back:', error);
   }
 };
-  
-
-  /*const handleButtonClick = () => {
-    saveCurrentAnswer();
-    if (isLastQuestion) {
-      console.log('Final Submission:', answers);
-      navigate(`/student-answer/${quizId}`);
-    } else {
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
-    }
-  };*/
-
-
-  // New button click
 
   const handleButtonClick = async () => {
     if (!questions || questions.length === 0 || currentQuestionIndex >= questions.length) {
@@ -193,7 +179,7 @@ const StudentTakeQuiz = () => {
       const data = await response.json();
       if (data.isCompleted) {
         // Quiz complete so skip to answer page
-        console.log('TESTING');
+        //console.log('TESTING');
         navigate(`/student-answer/${quizId}`);
       } else {
         setCurrentQuestionIndex(currentQuestionIndex + 1);
@@ -218,53 +204,9 @@ const StudentTakeQuiz = () => {
       console.log("No questions left");
     }
   };  
-
-  /*const saveCurrentAnswer = () => {
-    const currentQuestionId = questions?.[currentQuestionIndex]?.questionId;
-  
-    if (quizId !== null && currentQuestionId !== undefined && questions) {
-      let answerId: (number[] | string[]) = [];
-      const currentQuestionKey = `question_${currentQuestionId}`;
-      const isMultipleChoice = questions[currentQuestionIndex]?.questionTypeId === QuestionTypeEnum.MULTIPLE_CHOICE;
-  
-      // MCQ
-      if (isMultipleChoice) {
-        answerId = Object.keys(answers)
-          .filter(key => key.startsWith(`${currentQuestionKey}_`) && answers[key] === true)
-          .map(key => parseInt(key.split('_')[2]));
-      // SCQ
-      } else {
-        const answerValue = answers[currentQuestionKey];
-        if (typeof answerValue === 'string' && answerValue !== "") {
-          const selectedAnswer = questions[currentQuestionIndex].answers.find(answer => answer.answerValue === answerValue);
-          if (selectedAnswer) {
-            answerId = [selectedAnswer.answerId];
-          }
-        }
-      }
-  
-      // Default answer
-      if (answerId.length === 0) {
-        answerId = ["No answer was provided for this question."];
-      }
-  
-      const studentAnswer = createStudentAnswerDTO(quizId, currentQuestionId, answerId);
-
-      // change from local storage to backend partial submit later (POST to backend & check response status)
-
-      // Temp - For testing - Remove
-      console.log('Saving answer:', studentAnswer);
-      localStorage.setItem(`answer_${currentQuestionId}`, JSON.stringify(studentAnswer));
-    }
-  };*/
   
   const [showBackWarning, setShowBackWarning] = useState(false);
 
-  
-  
-  
-  
-  
 
   const handleSubmit = () => {
     console.log('Submitted answers:', answers);

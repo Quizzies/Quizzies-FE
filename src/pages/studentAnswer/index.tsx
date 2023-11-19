@@ -21,7 +21,7 @@ const StudentAnswer = () => {
 
         const response = await fetch(`${backendURL}/api/responses/${quizId}/result`, {
           headers: {
-            'Authorization': `Bearer ${token}` // double check with back end that it must be in header
+            'Authorization': `Bearer ${token}` // Token must be in header as per backend instructions
           }
         });
         
