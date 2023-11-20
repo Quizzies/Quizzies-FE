@@ -10,6 +10,7 @@ const initialState: QuizState = {
   quizDescription: "",
   quizName: "",
   timeLimit: 0,
+  courseId: 0,
   courseName: "",
   isPosted: false,
   quizId: undefined,
@@ -88,6 +89,7 @@ const quizSlice = createSlice<QuizState, any>({
     ) => {
       state.loading = false;
       state.success = true;
+      state.courseId = payload.courseId;
       state.courseName = payload.courseName;
       state.dueDate = payload.dueDate;
       state.quizDescription = payload.quizDescription;

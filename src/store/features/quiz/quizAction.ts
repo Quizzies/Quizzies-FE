@@ -78,7 +78,7 @@ export const getQuiz = createAsyncThunk<any, number>(
       }
 
       const data = (await response.json()) as QuizDetail;
-
+      debugger
       return data;
     } catch (error: any) {
       const errorResponse = setErroMapping(error);
